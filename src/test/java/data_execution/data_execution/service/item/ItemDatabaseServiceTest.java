@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.*;
 
-class ItemServiceImplTest extends IntegrationTestBase {
+class ItemDatabaseServiceTest extends IntegrationTestBase {
     private static final Long TEST_ID = 1L;
     private Item testItem;
 

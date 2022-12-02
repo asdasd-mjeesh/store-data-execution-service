@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProducerServiceImpl implements ProducerService {
+public class ProducerDatabaseService implements ProducerService {
     private final ProducerRepository producerRepository;
 
-    public ProducerServiceImpl(ProducerRepository producerRepository) {
+    public ProducerDatabaseService(ProducerRepository producerRepository) {
         this.producerRepository = producerRepository;
     }
 

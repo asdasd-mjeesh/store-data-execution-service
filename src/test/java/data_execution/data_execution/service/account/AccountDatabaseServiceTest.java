@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.*;
 
-class AccountServiceImplTest extends IntegrationTestBase {
+class AccountDatabaseServiceTest extends IntegrationTestBase {
     private static final Long TEST_ID = 1L;
     private Account testAccount;
 

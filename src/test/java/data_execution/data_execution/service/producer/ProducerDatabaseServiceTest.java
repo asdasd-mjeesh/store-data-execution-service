@@ -16,7 +16,7 @@ import java.util.Set;
 
 import static org.mockito.Mockito.*;
 
-class ProducerServiceImplTest extends IntegrationTestBase {
+class ProducerDatabaseServiceTest extends IntegrationTestBase {
     private static final Long TEST_ID = 1L;
     private Producer testProducer;
 

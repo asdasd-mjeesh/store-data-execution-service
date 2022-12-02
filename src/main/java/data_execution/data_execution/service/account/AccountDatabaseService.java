@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AccountDatabaseService implements AccountService {
     private final AccountRepository accountRepository;
 
-    public AccountServiceImpl(AccountRepository accountRepository) {
+    public AccountDatabaseService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
