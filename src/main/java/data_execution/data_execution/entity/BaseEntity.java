@@ -1,4 +1,4 @@
-package data_execution.data_execution.entity.account;
+package data_execution.data_execution.entity;
 
 import lombok.Data;
 

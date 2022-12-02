@@ -1,5 +1,6 @@
 package data_execution.data_execution.entity.account;
 
+import data_execution.data_execution.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;

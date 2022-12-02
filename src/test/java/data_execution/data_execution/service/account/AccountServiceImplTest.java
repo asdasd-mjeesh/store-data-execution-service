@@ -16,23 +16,21 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class AccountServiceImplTest extends IntegrationTestBase {
     private static final Long TEST_ID = 1L;
     private Account testAccount;
 
-    @Value("${account-test.account.save.values}")
+    @Value("${test.account.save.values}")
     private String accountValue;
     @MockBean
     private AccountRepository accountRepository;
-
     @Autowired
     private AccountService accountService;
 
     @BeforeEach
-    private void init() {
+    void setUp() {
         testAccount = Account.builder()
                 .name(accountValue)
                 .contact(accountValue)
@@ -74,7 +72,7 @@ class AccountServiceImplTest extends IntegrationTestBase {
 
     @Test
     void update() {
-        when(accountRepository.findById(1L)).thenReturn(Optional.of(testAccount));
+        when(accountRepository.findById(TEST_ID)).thenReturn(Optional.of(testAccount));
         accountService.update(testAccount);
 
         verify(accountRepository, times(1))
