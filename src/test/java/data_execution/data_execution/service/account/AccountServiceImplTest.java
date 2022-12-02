@@ -41,7 +41,6 @@ class AccountServiceImplTest extends IntegrationTestBase {
                                 .map(Permission::new)
                                 .collect(Collectors.toSet())))
                 .build();
-        testAccount.setId(TEST_ID);
     }
 
     @Test
@@ -72,6 +71,7 @@ class AccountServiceImplTest extends IntegrationTestBase {
 
     @Test
     void update() {
+        testAccount.setId(TEST_ID);
         when(accountRepository.findById(TEST_ID)).thenReturn(Optional.of(testAccount));
         accountService.update(testAccount);
 

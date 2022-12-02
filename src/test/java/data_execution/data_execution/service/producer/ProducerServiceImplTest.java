@@ -40,7 +40,6 @@ class ProducerServiceImplTest extends IntegrationTestBase {
                 .contacts(contacts)
                 .emails(emails)
                 .build();
-        testProducer.setId(TEST_ID);
     }
 
     @Test
@@ -66,6 +65,7 @@ class ProducerServiceImplTest extends IntegrationTestBase {
 
     @Test
     void update() {
+        testProducer.setId(TEST_ID);
         when(producerRepository.findById(TEST_ID)).thenReturn(Optional.of(testProducer));
         producerService.update(testProducer);
 
