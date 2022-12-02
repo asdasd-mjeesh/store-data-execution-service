@@ -10,5 +10,6 @@ public interface AccountService {
     Optional<Account> getById(Long id);
     Optional<Account> getByEmail(String email);
     List<Account> getAll();
+    boolean update(Account account);
     boolean deleteById(Long id);
 }

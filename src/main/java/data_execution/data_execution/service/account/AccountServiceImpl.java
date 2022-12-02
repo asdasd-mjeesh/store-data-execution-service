@@ -36,6 +36,16 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public boolean update(Account account) {
+        var existedAccount = accountRepository.findById(account.getId());
+        if (existedAccount.isPresent()) {
+            accountRepository.save(account);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public boolean deleteById(Long id) {
         accountRepository.deleteById(id);
         var account = accountRepository.findById(id);

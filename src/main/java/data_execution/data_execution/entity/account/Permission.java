@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "permission", schema = "store_domain")
+@Table(schema = "store_domain", name = "permission")
 public class Permission extends BaseEntity {
     @Column(name = "name")
     @Enumerated(value = EnumType.STRING)

@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "role", schema = "store_domain")
+@Table(schema = "store_domain", name = "role")
 public class Role extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private RoleName name;
