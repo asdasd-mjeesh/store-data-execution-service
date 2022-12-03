@@ -1,12 +1,10 @@
 package data_execution.data_execution.service.account;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import data_execution.data_execution.IntegrationTestBase;
+import data_execution.data_execution.TestingEntitiesFactory;
 import data_execution.data_execution.entity.account.Account;
-import data_execution.data_execution.entity.account.Permission;
-import data_execution.data_execution.entity.account.Role;
-import data_execution.data_execution.entity.account.RoleName;
 import data_execution.data_execution.repository.account.AccountRepository;
-import data_execution.data_execution.util.DefaultPermissionsFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.*;
 
@@ -23,24 +20,18 @@ class AccountDatabaseServiceTest extends IntegrationTestBase {
     private Account testAccount;
 
     @Value("${test.account.save.values}")
-    private String accountValue;
+    private String accountEmail;
+
+    @Autowired
+    private TestingEntitiesFactory testingEntitiesFactory;
     @MockBean
     private AccountRepository accountRepository;
     @Autowired
     private AccountService accountService;
 
     @BeforeEach
-    void setUp() {
-        testAccount = Account.builder()
-                .name(accountValue)
-                .contact(accountValue)
-                .email(accountValue)
-                .password(accountValue)
-                .role(new Role(RoleName.EMPLOYEE,
-                        DefaultPermissionsFactory.getEmployeeDefaultPermissions().stream()
-                                .map(Permission::new)
-                                .collect(Collectors.toSet())))
-                .build();
+    void setUp() throws JsonProcessingException {
+        testAccount = testingEntitiesFactory.getTestAccount();
     }
 
     @Test
@@ -52,15 +43,13 @@ class AccountDatabaseServiceTest extends IntegrationTestBase {
     @Test
     void getById() {
         accountService.getById(TEST_ID);
-        verify(accountRepository, times(1))
-                .findById(TEST_ID);
+        verify(accountRepository, times(1)).findById(TEST_ID);
     }
 
     @Test
     void getByEmail() {
-        accountService.getByEmail(accountValue);
-        verify(accountRepository, times(1))
-                .findByEmail(accountValue);
+        accountService.getByEmail(accountEmail);
+        verify(accountRepository, times(1)).findByEmail(accountEmail);
     }
 
     @Test
@@ -75,9 +64,7 @@ class AccountDatabaseServiceTest extends IntegrationTestBase {
         when(accountRepository.findById(TEST_ID)).thenReturn(Optional.of(testAccount));
         accountService.update(testAccount);
 
-        verify(accountRepository, times(1))
-                .findById(testAccount.getId());
-        verify(accountRepository, times(1))
-                .save(testAccount);
+        verify(accountRepository, times(1)).findById(testAccount.getId());
+        verify(accountRepository, times(1)).save(testAccount);
     }
 }

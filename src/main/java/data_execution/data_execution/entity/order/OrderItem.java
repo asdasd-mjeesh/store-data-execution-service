@@ -1,5 +1,6 @@
 package data_execution.data_execution.entity.order;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import data_execution.data_execution.entity.BaseEntity;
 import data_execution.data_execution.entity.item.Item;
 import data_execution.data_execution.entity.item.Size;
@@ -16,6 +17,7 @@ import javax.persistence.*;
 @Entity
 @Table(schema = "store_domain", name = "order_item")
 public class OrderItem extends BaseEntity {
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
