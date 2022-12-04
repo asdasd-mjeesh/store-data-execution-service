@@ -7,6 +7,8 @@ import data_execution.data_execution.entity.account.Account;
 import data_execution.data_execution.entity.account.Permission;
 import data_execution.data_execution.entity.account.Role;
 import data_execution.data_execution.entity.account.RoleName;
+import data_execution.data_execution.entity.cart.Cart;
+import data_execution.data_execution.entity.cart.CartItem;
 import data_execution.data_execution.entity.item.Item;
 import data_execution.data_execution.entity.item.ItemTypeEnum;
 import data_execution.data_execution.entity.item.Size;
@@ -18,6 +20,7 @@ import data_execution.data_execution.entity.producer.Contact;
 import data_execution.data_execution.entity.producer.Email;
 import data_execution.data_execution.entity.producer.Producer;
 import data_execution.data_execution.util.DefaultPermissionsFactory;
+import org.hibernate.transform.CacheableResultTransformer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +37,10 @@ public class TestingEntitiesFactory {
             .registerModule(new JavaTimeModule());
     private final Long TEST_ID = 1L;
 
+    @Value("${test.cart.save.values}")
+    private String cartValue = "cart-test";
+    private Cart testCart;
+
     @Value("${test.account.save.values}")
     private String accountValue = "account-test";
     private Account testAccount;
@@ -48,10 +55,13 @@ public class TestingEntitiesFactory {
     private BigDecimal itemCost = BigDecimal.valueOf(100.000);
     private Item testItem;
 
+    @Value("${test.order.save.values}")
+    private String orderValue = "order-test";
     private Order testOrder;
 
     {
         try {
+            cartInit();
             accountInit();
             producerInit();
             itemInit();
@@ -61,12 +71,26 @@ public class TestingEntitiesFactory {
         }
     }
 
+    private void cartInit() throws JsonProcessingException {
+        var cartItem = CartItem.builder()
+                .item(this.getTestItem())
+                .count(1)
+                .size(new Size(SizeEnum.L))
+                .build();
+
+        testCart = Cart.builder()
+                .cartItems(List.of(cartItem))
+                .currentTotalPrice(BigDecimal.ONE)
+                .build();
+    }
+
     private void accountInit() {
         testAccount = Account.builder()
                 .name(accountValue)
                 .contact(accountValue)
                 .email(accountValue)
                 .password(accountValue)
+                .cart(new Cart())
                 .role(new Role(RoleName.EMPLOYEE,
                         DefaultPermissionsFactory.getEmployeeDefaultPermissions().stream()
                                 .map(Permission::new)
@@ -107,8 +131,17 @@ public class TestingEntitiesFactory {
     }
 
     private void orderInit() throws JsonProcessingException {
-        var account = this.getTestAccount();
-        account.setId(TEST_ID);
+        var account = Account.builder()
+                .name(orderValue)
+                .email(orderValue)
+                .contact(orderValue)
+                .password(orderValue)
+                .cart(new Cart())
+                .role(new Role(RoleName.EMPLOYEE,
+                        DefaultPermissionsFactory.getEmployeeDefaultPermissions().stream()
+                                .map(Permission::new)
+                                .collect(Collectors.toSet())))
+                .build();
 
         testOrder = Order.builder()
                 .account(account)
@@ -131,6 +164,10 @@ public class TestingEntitiesFactory {
 
     public Producer getTestProducer() throws JsonProcessingException {
         return objectMapper.readValue(objectMapper.writeValueAsString(testProducer), Producer.class);
+    }
+
+    public Cart getTestCart() throws JsonProcessingException {
+        return objectMapper.readValue(objectMapper.writeValueAsString(testCart), Cart.class);
     }
 
     public Item getTestItem() throws JsonProcessingException {

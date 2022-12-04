@@ -19,8 +19,10 @@ public class Producer extends BaseEntity {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id")
     private Set<Email> emails = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id")
     private Set<Contact> contacts = new HashSet<>();
 }

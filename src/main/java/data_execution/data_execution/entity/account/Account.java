@@ -1,6 +1,7 @@
 package data_execution.data_execution.entity.account;
 
 import data_execution.data_execution.entity.BaseEntity;
+import data_execution.data_execution.entity.cart.Cart;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,9 @@ public class Account extends BaseEntity {
     private String email;
     @Column(name = "password")
     private String password;
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Role role;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Cart cart = new Cart();
 }

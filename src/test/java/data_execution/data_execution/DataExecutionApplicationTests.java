@@ -9,5 +9,4 @@ class DataExecutionApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
