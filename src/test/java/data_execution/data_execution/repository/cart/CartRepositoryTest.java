@@ -22,7 +22,7 @@ class CartRepositoryTest {
 
     @Test
     void getByAccountId() {
-//        Optional<Cart> byAccountId = this.cartRepository.getByAccountId(1L);
-//        System.out.println(byAccountId.get());
+        Optional<Cart> byAccountId = this.cartRepository.getByAccountId(1L);
+        System.out.println(byAccountId.get());
     }
 }

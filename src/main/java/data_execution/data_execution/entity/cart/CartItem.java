@@ -1,6 +1,5 @@
 package data_execution.data_execution.entity.cart;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import data_execution.data_execution.entity.BaseEntity;
 import data_execution.data_execution.entity.item.Item;
 import data_execution.data_execution.entity.item.Size;

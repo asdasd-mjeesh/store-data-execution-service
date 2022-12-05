@@ -16,8 +16,7 @@ public class CartDatabaseService implements CartService {
 
     @Override
     public Optional<Cart> getByAccountId(Long accountId) {
-//        return cartRepository.getByAccountId(accountId);
-        return null;
+        return cartRepository.getByAccountId(accountId);
     }
 
     @Override

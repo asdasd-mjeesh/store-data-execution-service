@@ -23,10 +23,7 @@ public class PermissionDatabaseService implements PermissionService {
 
     @Override
     public Optional<Permission> getByPermissionName(PermissionEnum permissionName) {
-        System.out.println(permissionName.name());
-        var asd = permissionRepository.findByName(permissionName);
-        System.out.println(asd.get());
-        return asd;
+        return permissionRepository.findByName(permissionName);
     }
 
     @Override

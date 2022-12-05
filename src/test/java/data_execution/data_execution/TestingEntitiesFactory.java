@@ -95,7 +95,7 @@ public class TestingEntitiesFactory {
                 .email(accountValue)
                 .password(accountValue)
                 .cart(new Cart())
-                .role(rolesFactory.getRoleByRoleName(RoleName.ADMIN))
+                .role(null)
                 .build();
     }
 
@@ -138,7 +138,7 @@ public class TestingEntitiesFactory {
                 .contact(orderValue)
                 .password(orderValue)
                 .cart(new Cart())
-                .role(rolesFactory.getRoleByRoleName(RoleName.ADMIN))
+                .role(null)
                 .build();
 
         testOrder = Order.builder()
