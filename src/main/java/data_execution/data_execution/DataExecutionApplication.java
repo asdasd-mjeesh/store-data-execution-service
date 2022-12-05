@@ -1,10 +1,8 @@
 package data_execution.data_execution;
 
-import data_execution.data_execution.entity.account.Permission;
-import data_execution.data_execution.entity.account.PermissionEnum;
 import data_execution.data_execution.entity.item.Size;
 import data_execution.data_execution.entity.item.SizeEnum;
-import data_execution.data_execution.service.account.PermissionService;
+import data_execution.data_execution.service.factory.PermissionInitService;
 import data_execution.data_execution.service.item.SizeService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,12 +20,9 @@ public class DataExecutionApplication {
     }
 
     @Bean
-    CommandLineRunner createPermissions(PermissionService permissionService) {
+    CommandLineRunner createPermissions(PermissionInitService permissionInitService) {
         return args -> {
-            var permissions = Arrays.stream(PermissionEnum.values())
-                    .map(Permission::new)
-                    .collect(Collectors.toList());
-//            permissions.forEach(permissionService::create);
+            permissionInitService.init();
         };
     }
 

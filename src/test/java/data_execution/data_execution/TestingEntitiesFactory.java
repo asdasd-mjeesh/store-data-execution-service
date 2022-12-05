@@ -19,13 +19,13 @@ import data_execution.data_execution.entity.order.OrderStatusEnum;
 import data_execution.data_execution.entity.producer.Contact;
 import data_execution.data_execution.entity.producer.Email;
 import data_execution.data_execution.entity.producer.Producer;
-import data_execution.data_execution.util.DefaultPermissionsFactory;
-import org.hibernate.transform.CacheableResultTransformer;
+import data_execution.data_execution.service.factory.DefaultPermissionEnumsFactory;
+import data_execution.data_execution.service.factory.DefaultRolesFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -37,6 +37,9 @@ public class TestingEntitiesFactory {
     private static final ObjectMapper objectMapper = new ObjectMapper()
             .registerModule(new JavaTimeModule());
     private final Long TEST_ID = 1L;
+
+    @Autowired
+    private DefaultRolesFactory rolesFactory;
 
     @Value("${test.cart.save.values}")
     private String cartValue = "cart-test";
@@ -92,10 +95,7 @@ public class TestingEntitiesFactory {
                 .email(accountValue)
                 .password(accountValue)
                 .cart(new Cart())
-                .role(new Role(RoleName.EMPLOYEE,
-                        DefaultPermissionsFactory.getEmployeeDefaultPermissions().stream()
-                                .map(Permission::new)
-                                .collect(Collectors.toSet())))
+                .role(rolesFactory.getRoleByRoleName(RoleName.ADMIN))
                 .build();
     }
 
@@ -138,10 +138,7 @@ public class TestingEntitiesFactory {
                 .contact(orderValue)
                 .password(orderValue)
                 .cart(new Cart())
-                .role(new Role(RoleName.EMPLOYEE,
-                        DefaultPermissionsFactory.getEmployeeDefaultPermissions().stream()
-                                .map(Permission::new)
-                                .collect(Collectors.toSet())))
+                .role(rolesFactory.getRoleByRoleName(RoleName.ADMIN))
                 .build();
 
         testOrder = Order.builder()

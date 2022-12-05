@@ -1,7 +1,7 @@
 package data_execution.data_execution.service.mapper;
 
 import data_execution.data_execution.entity.account.Account;
-import data_execution.data_execution.response_dto.AccountDto;
+import data_execution.data_execution.dto.response.AccountDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
