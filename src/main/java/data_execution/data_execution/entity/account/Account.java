@@ -5,6 +5,9 @@ import data_execution.data_execution.entity.cart.Cart;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.Vector;
 
 @Builder
 @EqualsAndHashCode(callSuper = true)
@@ -28,3 +31,4 @@ public class Account extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private Cart cart = new Cart();
 }
+
