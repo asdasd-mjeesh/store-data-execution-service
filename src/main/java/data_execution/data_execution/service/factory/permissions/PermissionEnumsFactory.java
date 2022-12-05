@@ -1,4 +1,4 @@
-package data_execution.data_execution.service.factory;
+package data_execution.data_execution.service.factory.permissions;
 
 import data_execution.data_execution.entity.account.PermissionEnum;
 import org.springframework.stereotype.Service;
@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class DefaultPermissionEnumsFactory {
+public class PermissionEnumsFactory {
     private final Set<PermissionEnum> USER_DEFAULT_PERMISSION_ENUMS;
     private final Set<PermissionEnum> EMPLOYEE_DEFAULT_PERMISSION_ENUMS;
     private final Set<PermissionEnum> ADMIN_DEFAULT_PERMISSION_ENUMS;
@@ -33,7 +33,7 @@ public class DefaultPermissionEnumsFactory {
         ));
     }
 
-    private DefaultPermissionEnumsFactory() {  }
+    private PermissionEnumsFactory() {  }
 
     public Set<PermissionEnum> getUserDefaultPermissionEnums() {
         return USER_DEFAULT_PERMISSION_ENUMS;

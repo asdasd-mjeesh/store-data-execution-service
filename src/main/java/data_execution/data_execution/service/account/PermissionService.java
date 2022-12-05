@@ -10,4 +10,5 @@ public interface PermissionService {
     Permission create(Permission permission);
     Optional<Permission> getByPermissionName(PermissionEnum permissionName);
     boolean saveAll(Collection<Permission> permissions);
+    long getAllPermissionsCount();
 }

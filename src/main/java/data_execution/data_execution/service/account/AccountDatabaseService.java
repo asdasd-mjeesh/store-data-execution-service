@@ -22,7 +22,6 @@ public class AccountDatabaseService implements AccountService {
     @Override
     public Account save(AccountSaveDto account) {
         Account newAccount = accountSaveDtoMapper.map(account);
-        System.out.println(newAccount);
         return accountRepository.save(newAccount);
     }
 

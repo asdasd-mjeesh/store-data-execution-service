@@ -31,4 +31,9 @@ public class PermissionDatabaseService implements PermissionService {
         var savedEntities = permissionRepository.saveAll(permissions);
         return !savedEntities.isEmpty();
     }
+
+    @Override
+    public long getAllPermissionsCount() {
+        return permissionRepository.count();
+    }
 }

@@ -2,7 +2,7 @@ package data_execution.data_execution;
 
 import data_execution.data_execution.entity.item.Size;
 import data_execution.data_execution.entity.item.SizeEnum;
-import data_execution.data_execution.service.factory.PermissionInitService;
+import data_execution.data_execution.service.factory.permissions.PermissionInitService;
 import data_execution.data_execution.service.item.SizeService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
