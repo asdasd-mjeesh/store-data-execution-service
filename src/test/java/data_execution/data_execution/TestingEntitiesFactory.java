@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -145,7 +146,7 @@ public class TestingEntitiesFactory {
 
         testOrder = Order.builder()
                 .account(account)
-                .buyDate(LocalDate.now())
+                .buyDate(LocalDateTime.now())
                 .status(OrderStatusEnum.IN_PROCESS)
                 .totalPrice(BigDecimal.valueOf(100.000))
                 .build();

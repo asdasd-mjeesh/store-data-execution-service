@@ -28,7 +28,7 @@ public class Item extends BaseEntity {
     @JoinColumn(name = "producer_id", referencedColumnName = "id")
     private Producer producer;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(schema = "store_domain", name = "item_size",
             joinColumns =
             @JoinColumn(name = "item_id", referencedColumnName = "id"),

@@ -26,7 +26,7 @@ public class OrderItem extends BaseEntity {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "size_id")
     private Size size;
 

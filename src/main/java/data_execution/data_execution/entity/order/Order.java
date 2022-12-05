@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,5 +30,5 @@ public class Order extends BaseEntity {
     @Column(name = "total_price")
     private BigDecimal totalPrice;
     @Column(name = "buy_date")
-    private LocalDate buyDate;
+    private LocalDateTime buyDate;
 }
