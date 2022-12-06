@@ -4,8 +4,7 @@ import data_execution.data_execution.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Builder
 @EqualsAndHashCode(callSuper = true)
@@ -19,10 +18,10 @@ public class Producer extends BaseEntity {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private Set<Email> emails = new HashSet<>();
+    @JoinColumn(name = "producer_id")
+    private List<Email> emails;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private Set<Contact> contacts = new HashSet<>();
+    @JoinColumn(name = "producer_id")
+    private List<Contact> contacts;
 }

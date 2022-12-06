@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProducerService {
-    Producer save(Producer producer);
+    Producer create(Producer producer);
     Optional<Producer> getById(Long id);
     List<Producer> getAll();
     boolean update(Producer producer);

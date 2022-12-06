@@ -32,7 +32,7 @@ class ProducerDatabaseServiceTest extends IntegrationTestBase {
 
     @Test
     void save() {
-        producerService.save(testProducer);
+        producerService.create(testProducer);
         verify(producerRepository, times(1)).save(testProducer);
     }
 

@@ -1,4 +1,4 @@
-package data_execution.data_execution.dto.response;
+package data_execution.data_execution.dto.response.account;
 
 import lombok.Builder;
 import lombok.Data;

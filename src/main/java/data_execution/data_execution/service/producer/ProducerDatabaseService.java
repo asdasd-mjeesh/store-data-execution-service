@@ -16,7 +16,7 @@ public class ProducerDatabaseService implements ProducerService {
     }
 
     @Override
-    public Producer save(Producer producer) {
+    public Producer create(Producer producer) {
         return producerRepository.save(producer);
     }
 

@@ -96,10 +96,10 @@ public class TestingEntitiesFactory {
     }
 
     private void producerInit() {
-        var contacts = Set.of(
+        var contacts = List.of(
                 new Contact(producerValue)
         );
-        var emails = Set.of(
+        var emails = List.of(
                 new Email(producerValue)
         );
         testProducer = Producer.builder()
