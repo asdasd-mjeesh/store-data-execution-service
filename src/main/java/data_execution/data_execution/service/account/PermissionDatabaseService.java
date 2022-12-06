@@ -17,19 +17,13 @@ public class PermissionDatabaseService implements PermissionService {
     }
 
     @Override
-    public Permission create(Permission permission) {
-        return permissionRepository.save(permission);
-    }
-
-    @Override
     public Optional<Permission> getByPermissionName(PermissionEnum permissionName) {
         return permissionRepository.findByName(permissionName);
     }
 
     @Override
-    public boolean saveAll(Collection<Permission> permissions) {
-        var savedEntities = permissionRepository.saveAll(permissions);
-        return !savedEntities.isEmpty();
+    public void saveAll(Collection<Permission> permissions) {
+        permissionRepository.saveAll(permissions);
     }
 
     @Override

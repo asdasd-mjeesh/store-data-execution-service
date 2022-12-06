@@ -7,8 +7,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface PermissionService {
-    Permission create(Permission permission);
     Optional<Permission> getByPermissionName(PermissionEnum permissionName);
-    boolean saveAll(Collection<Permission> permissions);
+    void saveAll(Collection<Permission> permissions);
     long getAllPermissionsCount();
 }

@@ -1,5 +1,6 @@
 package data_execution.data_execution.service.mapper;
 
+import data_execution.data_execution.entity.account.Permission;
 import data_execution.data_execution.entity.account.Role;
 import data_execution.data_execution.dto.response.RoleDto;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,9 @@ public class RoleMapper implements Mapper<RoleDto, Role> {
     public RoleDto map(Role from) {
         return RoleDto.builder()
                 .name(from.getName())
-                .permissions(from.getPermissions())
+                .permissions(from.getPermissions().stream()
+                        .map(Permission::getName)
+                        .collect(Collectors.toSet()))
                 .build();
     }
 
