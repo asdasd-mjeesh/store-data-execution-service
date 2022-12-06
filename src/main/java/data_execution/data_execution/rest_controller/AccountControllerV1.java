@@ -90,4 +90,17 @@ public class AccountControllerV1 {
         AccountDto accountDto = accountMapper.map(changedAccount);
         return ResponseEntity.ok(accountDto);
     }
+
+    @PostMapping("/deletePermissions")
+    public ResponseEntity<?> deletePermissions(@RequestParam(name = "accountId", defaultValue = "null") Long accountId,
+                                            @RequestBody(required = false) List<PermissionEnum> permissionEnums) {
+        if (accountId == null || permissionEnums == null) {
+            return new ResponseEntity<>(
+                    String.format("Incorrect parameters: accountId=%s, permissions=%s", accountId, permissionEnums),
+                    HttpStatus.BAD_REQUEST);
+        }
+        Account changedAccount = accountRolePermissionService.deletePermissions(accountId, permissionEnums);
+        AccountDto accountDto = accountMapper.map(changedAccount);
+        return ResponseEntity.ok(accountDto);
+    }
 }

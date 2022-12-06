@@ -53,21 +53,35 @@ public class AccountRolePermissionsServiceImpl implements AccountRolePermissionS
         return account;
     }
 
+    /**
+     *      probably will better move this method to some 'MapperClass', but it uses only in current service,
+     *      so I leaved it here
+     * */
+    private Set<Permission> getPermissionsFromEnums(List<PermissionEnum> permissionEnums) {
+        return permissionEnums.stream()
+                .map(permissionEnum -> permissionService.getByPermissionName(permissionEnum)
+                        .orElseThrow(() -> new EntityNotFoundException(String.format(
+                                ENTITY_NOT_FOUND_ERROR_MSG_TEMPLATE, Permission.class, "name", permissionEnum))))
+                .collect(Collectors.toSet());
+    }
+
     @Override
     public Account addPermissionsToAccount(Long accountId, List<PermissionEnum> permissionEnums) {
         Account account = this.getAccount(accountId);
-        Set<Permission> permissions = permissionEnums.stream()
-                .map(permissionEnum -> permissionService.getByPermissionName(permissionEnum)
-                        .orElseThrow(() -> new EntityNotFoundException(String.format(
-                                        ENTITY_NOT_FOUND_ERROR_MSG_TEMPLATE, Permission.class, "name", permissionEnum))))
-                .collect(Collectors.toSet());
-
+        Set<Permission> permissions = this.getPermissionsFromEnums(permissionEnums);
         account.getRole().getPermissions().addAll(permissions);
         return accountService.update(account);
     }
 
     @Override
-    public Account deletePermissions(Long accountId, List<PermissionEnum> permissions) {
-        return null;
+    public Account deletePermissions(Long accountId, List<PermissionEnum> permissionEnums) {
+        Account account = this.getAccount(accountId);
+        Set<Permission> permissions = this.getPermissionsFromEnums(permissionEnums);
+        Set<Permission> filteredPermissions = account.getRole().getPermissions().stream()
+                .filter(permission -> !permissions.contains(permission))
+                .collect(Collectors.toSet());
+
+        account.getRole().setPermissions(filteredPermissions);
+        return accountService.update(account);
     }
 }
