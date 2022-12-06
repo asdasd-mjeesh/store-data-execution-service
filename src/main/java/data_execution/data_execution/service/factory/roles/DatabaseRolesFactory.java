@@ -2,14 +2,14 @@ package data_execution.data_execution.service.factory.roles;
 
 import data_execution.data_execution.entity.account.Role;
 import data_execution.data_execution.entity.account.RoleName;
-import data_execution.data_execution.service.factory.permissions.DefaultPermissionObjectFactory;
+import data_execution.data_execution.service.factory.permissions.ContextPermissionEntityFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DefaultRolesFactory implements RolesFactory{
-    private final DefaultPermissionObjectFactory permissionObjectFactory;
+public class DatabaseRolesFactory implements RolesFactory{
+    private final ContextPermissionEntityFactory permissionObjectFactory;
 
-    public DefaultRolesFactory(DefaultPermissionObjectFactory permissionObjectFactory) {
+    public DatabaseRolesFactory(ContextPermissionEntityFactory permissionObjectFactory) {
         this.permissionObjectFactory = permissionObjectFactory;
     }
 

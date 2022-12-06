@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccountService {
-    Account save(AccountSaveDto account);
+    Account create(Account account);
     Optional<Account> getById(Long id);
     Optional<Account> getByEmail(String email);
     List<Account> getAll();

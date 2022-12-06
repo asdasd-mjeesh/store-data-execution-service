@@ -2,8 +2,9 @@ package data_execution.data_execution;
 
 import data_execution.data_execution.entity.item.Size;
 import data_execution.data_execution.entity.item.SizeEnum;
-import data_execution.data_execution.service.factory.permissions.PermissionInitService;
+import data_execution.data_execution.service.factory.ContextInitService;
 import data_execution.data_execution.service.item.SizeService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,9 +21,10 @@ public class DataExecutionApplication {
     }
 
     @Bean
-    CommandLineRunner createPermissions(PermissionInitService permissionInitService) {
+    CommandLineRunner createPermissions(
+            @Qualifier("contextPermissionEntityFactory") ContextInitService contextInitService) {
         return args -> {
-            permissionInitService.init();
+            contextInitService.init();
         };
     }
 

@@ -20,9 +20,9 @@ public class Item extends BaseEntity {
     private String title;
     @Column(name = "type")
     @Enumerated(value = EnumType.STRING)
-    private ItemTypeEnum type;
+    private ItemType type;
     @Column(name = "cost")
-    private BigDecimal bigDecimal;
+    private BigDecimal cost;
 
     @ManyToOne
     @JoinColumn(name = "producer_id", referencedColumnName = "id")

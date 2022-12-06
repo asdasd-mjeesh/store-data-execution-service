@@ -7,7 +7,7 @@ import data_execution.data_execution.entity.account.Account;
 import data_execution.data_execution.entity.cart.Cart;
 import data_execution.data_execution.entity.cart.CartItem;
 import data_execution.data_execution.entity.item.Item;
-import data_execution.data_execution.entity.item.ItemTypeEnum;
+import data_execution.data_execution.entity.item.ItemType;
 import data_execution.data_execution.entity.item.Size;
 import data_execution.data_execution.entity.item.SizeEnum;
 import data_execution.data_execution.entity.order.Order;
@@ -16,7 +16,7 @@ import data_execution.data_execution.entity.order.OrderStatusEnum;
 import data_execution.data_execution.entity.producer.Contact;
 import data_execution.data_execution.entity.producer.Email;
 import data_execution.data_execution.entity.producer.Producer;
-import data_execution.data_execution.service.factory.roles.DefaultRolesFactory;
+import data_execution.data_execution.service.factory.roles.DatabaseRolesFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +34,7 @@ public class TestingEntitiesFactory {
     private final Long TEST_ID = 1L;
 
     @Autowired
-    private DefaultRolesFactory rolesFactory;
+    private DatabaseRolesFactory rolesFactory;
 
     @Value("${test.cart.save.values}")
     private String cartValue = "cart-test";
@@ -119,11 +118,11 @@ public class TestingEntitiesFactory {
                 .collect(Collectors.toList());
 
         testItem = Item.builder()
-                .bigDecimal(itemCost)
+                .cost(itemCost)
                 .producer(testProducer)
                 .sizes(sizes)
                 .title(itemValue)
-                .type(ItemTypeEnum.JACKET)
+                .type(ItemType.JACKET)
                 .build();
     }
 

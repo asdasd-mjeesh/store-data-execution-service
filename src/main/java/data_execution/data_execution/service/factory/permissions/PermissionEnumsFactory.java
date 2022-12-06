@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class PermissionEnumsFactory {
+public class PermissionEnumsFactory implements PermissionFactory<PermissionEnum> {
     private final Set<PermissionEnum> USER_DEFAULT_PERMISSION_ENUMS;
     private final Set<PermissionEnum> EMPLOYEE_DEFAULT_PERMISSION_ENUMS;
     private final Set<PermissionEnum> ADMIN_DEFAULT_PERMISSION_ENUMS;
@@ -35,15 +35,18 @@ public class PermissionEnumsFactory {
 
     private PermissionEnumsFactory() {  }
 
-    public Set<PermissionEnum> getUserDefaultPermissionEnums() {
+    @Override
+    public Set<PermissionEnum> getUserPermissions() {
         return USER_DEFAULT_PERMISSION_ENUMS;
     }
 
-    public Set<PermissionEnum> getEmployeeDefaultPermissionEnums() {
+    @Override
+    public Set<PermissionEnum> getEmployeePermissions() {
         return EMPLOYEE_DEFAULT_PERMISSION_ENUMS;
     }
 
-    public Set<PermissionEnum> getAdminDefaultPermissionEnums() {
+    @Override
+    public Set<PermissionEnum> getAdminPermissions() {
         return ADMIN_DEFAULT_PERMISSION_ENUMS;
     }
 }

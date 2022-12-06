@@ -1,11 +1,8 @@
 package data_execution.data_execution.service.account;
 
-import data_execution.data_execution.dto.request.account.AccountSaveDto;
-import data_execution.data_execution.dto.response.account.AccountDto;
 import data_execution.data_execution.entity.account.Account;
 import data_execution.data_execution.exception.EntityNotFoundException;
 import data_execution.data_execution.repository.account.AccountRepository;
-import data_execution.data_execution.service.mapper.account.AccountSaveDtoMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,17 +11,14 @@ import java.util.Optional;
 @Service
 public class AccountDatabaseService implements AccountService {
     private final AccountRepository accountRepository;
-    private final AccountSaveDtoMapper accountSaveDtoMapper;
 
-    public AccountDatabaseService(AccountRepository accountRepository, AccountSaveDtoMapper accountSaveDtoMapper) {
+    public AccountDatabaseService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
-        this.accountSaveDtoMapper = accountSaveDtoMapper;
     }
 
     @Override
-    public Account save(AccountSaveDto account) {
-        Account newAccount = accountSaveDtoMapper.map(account);
-        return accountRepository.save(newAccount);
+    public Account create(Account account) {
+        return accountRepository.save(account);
     }
 
     @Override

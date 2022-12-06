@@ -8,6 +8,7 @@ import data_execution.data_execution.entity.account.RoleName;
 import data_execution.data_execution.service.account.AccountRolePermissionService;
 import data_execution.data_execution.service.account.AccountService;
 import data_execution.data_execution.service.mapper.account.AccountMapper;
+import data_execution.data_execution.service.mapper.account.AccountSaveDtoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,19 +21,23 @@ public class AccountControllerV1 {
     private final AccountService accountService;
     private final AccountRolePermissionService accountRolePermissionService;
     private final AccountMapper accountMapper;
+    private final AccountSaveDtoMapper accountSaveDtoMapper;
 
     public AccountControllerV1(AccountService accountService,
                                AccountRolePermissionService accountRolePermissionService,
-                               AccountMapper accountMapper) {
+                               AccountMapper accountMapper,
+                               AccountSaveDtoMapper accountSaveDtoMapper) {
         this.accountService = accountService;
         this.accountRolePermissionService = accountRolePermissionService;
         this.accountMapper = accountMapper;
+        this.accountSaveDtoMapper = accountSaveDtoMapper;
     }
 
     @PostMapping("/")
     public ResponseEntity<?> createAccount(@RequestBody AccountSaveDto account) {
-        var savedAccount = accountService.save(account);
-        var accountDto = accountMapper.map(savedAccount);
+        var accountForSaving = accountSaveDtoMapper.map(account);
+        accountForSaving = accountService.create(accountForSaving);
+        var accountDto = accountMapper.map(accountForSaving);
         return ResponseEntity.ok(accountDto);
     }
 
