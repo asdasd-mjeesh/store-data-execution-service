@@ -1,6 +1,7 @@
 package data_execution.data_execution.service.producer;
 
 import data_execution.data_execution.entity.producer.Producer;
+import data_execution.data_execution.exception.EntityNotFoundException;
 import data_execution.data_execution.repository.producer.ProducerRepository;
 import org.springframework.stereotype.Service;
 
@@ -31,13 +32,12 @@ public class ProducerDatabaseService implements ProducerService {
     }
 
     @Override
-    public boolean update(Producer producer) {
+    public Producer update(Producer producer) {
         var existedProducer = producerRepository.findById(producer.getId());
         if (existedProducer.isPresent()) {
-            producerRepository.save(producer);
-            return true;
+            return producerRepository.save(producer);
         }
-        return false;
+        throw new EntityNotFoundException(String.format("Producer with id=%s not found", producer.getId()));
     }
 
     @Override

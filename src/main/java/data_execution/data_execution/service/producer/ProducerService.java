@@ -9,6 +9,6 @@ public interface ProducerService {
     Producer create(Producer producer);
     Optional<Producer> getById(Long id);
     List<Producer> getAll();
-    boolean update(Producer producer);
+    Producer update(Producer producer);
     boolean deleteById(Long id);
 }

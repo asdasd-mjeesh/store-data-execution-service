@@ -20,6 +20,7 @@ public class AccountSaveDtoMapper implements Mapper<Account, AccountSaveDto> {
 
     @Override
     public Account map(AccountSaveDto from) {
+        System.out.println(this.getClass().getSimpleName() + " -> role: " + from.getRoleName());
         return Account.builder()
                 .name(from.getName())
                 .contact(from.getContact())

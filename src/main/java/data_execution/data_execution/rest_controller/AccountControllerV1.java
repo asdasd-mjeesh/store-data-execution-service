@@ -47,7 +47,7 @@ public class AccountControllerV1 {
                 HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/")
+    @PatchMapping("/")
     public ResponseEntity<String> update(@RequestBody Account account) {
         boolean isUpdated = accountService.updateWithConfirmation(account);
         if (isUpdated) {
@@ -57,7 +57,7 @@ public class AccountControllerV1 {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<String> deleteById(@PathVariable(name = "id") Long id) {
         boolean isDeleted = accountService.deleteById(id);
         if (isDeleted) {
             return ResponseEntity.ok("Deleted successfully");
