@@ -8,4 +8,5 @@ public interface RoleService {
     Role save(Role role);
     Optional<Role> getById(Long id);
     boolean update(Role role);
+    boolean deleteById(Long id);
 }

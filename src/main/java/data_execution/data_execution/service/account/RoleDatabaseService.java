@@ -3,6 +3,7 @@ package data_execution.data_execution.service.account;
 import data_execution.data_execution.entity.account.Role;
 import data_execution.data_execution.repository.account.RoleRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -32,5 +33,12 @@ public class RoleDatabaseService implements RoleService {
             return true;
         }
         return false;
+    }
+
+    @Transactional
+    @Override
+    public boolean deleteById(Long id) {
+        roleRepository.deleteById(id);
+        return roleRepository.findById(id).isEmpty();
     }
 }

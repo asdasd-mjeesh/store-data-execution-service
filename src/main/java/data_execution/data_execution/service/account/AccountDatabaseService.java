@@ -2,6 +2,7 @@ package data_execution.data_execution.service.account;
 
 import data_execution.data_execution.dto.request.account.AccountSaveDto;
 import data_execution.data_execution.entity.account.Account;
+import data_execution.data_execution.exception.EntityNotFoundException;
 import data_execution.data_execution.repository.account.AccountRepository;
 import data_execution.data_execution.service.mapper.AccountSaveDtoMapper;
 import org.springframework.stereotype.Service;
@@ -41,13 +42,22 @@ public class AccountDatabaseService implements AccountService {
     }
 
     @Override
-    public boolean update(Account account) {
+    public boolean updateWithConfirmation(Account account) {
         var existedAccount = accountRepository.findById(account.getId());
         if (existedAccount.isPresent()) {
             accountRepository.save(account);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Account update(Account account) {
+        var existedAccount = accountRepository.findById(account.getId());
+        if (existedAccount.isPresent()) {
+            return accountRepository.save(account);
+        }
+        throw new EntityNotFoundException(String.format("Account with id=%s not found", account.getId()));
     }
 
     @Override

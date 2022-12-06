@@ -51,11 +51,10 @@ public class DefaultPermissionObjectFactory implements PermissionInitService, Da
     @Override
     public void init() {
         long permissionsCount = permissionService.getAllPermissionsCount();
-        if (permissionsCount == PermissionEnum.values().length) {
-            loadFromDatabase();
-        } else {
+        if (permissionsCount != PermissionEnum.values().length) {
             uploadToDatabase();
         }
+        loadFromDatabase();
     }
 
     public Set<Permission> getUserPermissions() {
