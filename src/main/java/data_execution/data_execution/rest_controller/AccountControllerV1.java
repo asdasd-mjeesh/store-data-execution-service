@@ -3,6 +3,7 @@ package data_execution.data_execution.rest_controller;
 import data_execution.data_execution.dto.request.account.AccountSaveDto;
 import data_execution.data_execution.dto.response.AccountDto;
 import data_execution.data_execution.entity.account.Account;
+import data_execution.data_execution.entity.account.PermissionEnum;
 import data_execution.data_execution.entity.account.RoleName;
 import data_execution.data_execution.service.account.AccountRolePermissionService;
 import data_execution.data_execution.service.account.AccountService;
@@ -10,6 +11,8 @@ import data_execution.data_execution.service.mapper.AccountMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/accounts")
@@ -62,7 +65,7 @@ public class AccountControllerV1 {
         return new ResponseEntity<>("Delete was failed", HttpStatus.CONFLICT);
     }
 
-    @PostMapping("/changeRole/")
+    @PostMapping("/changeRole")
     public ResponseEntity<?> changeRole(@RequestParam(name = "accountId", defaultValue = "null") Long accountId,
                                         @RequestParam(name = "roleName", defaultValue = "null") RoleName roleName) {
         if (accountId == null || roleName == null) {
@@ -71,6 +74,19 @@ public class AccountControllerV1 {
                     HttpStatus.BAD_REQUEST);
         }
         Account changedAccount = accountRolePermissionService.changeRole(accountId, roleName);
+        AccountDto accountDto = accountMapper.map(changedAccount);
+        return ResponseEntity.ok(accountDto);
+    }
+
+    @PostMapping("/addPermissions")
+    public ResponseEntity<?> addPermissions(@RequestParam(name = "accountId", defaultValue = "null") Long accountId,
+                                            @RequestBody(required = false) List<PermissionEnum> permissionEnums) {
+        if (accountId == null || permissionEnums == null) {
+            return new ResponseEntity<>(
+                    String.format("Incorrect parameters: accountId=%s, permissions=%s", accountId, permissionEnums),
+                    HttpStatus.BAD_REQUEST);
+        }
+        Account changedAccount = accountRolePermissionService.addPermissionsToAccount(accountId, permissionEnums);
         AccountDto accountDto = accountMapper.map(changedAccount);
         return ResponseEntity.ok(accountDto);
     }

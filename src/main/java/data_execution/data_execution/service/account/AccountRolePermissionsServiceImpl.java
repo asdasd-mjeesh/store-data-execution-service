@@ -1,19 +1,20 @@
 package data_execution.data_execution.service.account;
 
-import data_execution.data_execution.entity.account.Account;
-import data_execution.data_execution.entity.account.Permission;
-import data_execution.data_execution.entity.account.Role;
-import data_execution.data_execution.entity.account.RoleName;
+import data_execution.data_execution.entity.account.*;
 import data_execution.data_execution.exception.EntityNotFoundException;
 import data_execution.data_execution.service.factory.roles.RolesFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class AccountRolePermissionsServiceImpl implements AccountRolePermissionService {
+    private static final String ENTITY_NOT_FOUND_ERROR_MSG_TEMPLATE = "%s with %s=%s not found";
     private final AccountService accountService;
     private final PermissionService permissionService;
     private final RoleService roleService;
@@ -28,33 +29,45 @@ public class AccountRolePermissionsServiceImpl implements AccountRolePermissionS
         this.rolesFactory = rolesFactory;
     }
 
-    @Override
-    public Account changeRole(Long accountId, RoleName roleName) {
-        var account = accountService.getById(accountId);
+    private Account getAccount(Long accountId) {
+        Optional<Account> account = accountService.getById(accountId);
         if (account.isEmpty()) {
-            String errorMsg = String.format("Account with id=%s not found", accountId);
+            String errorMsg = String.format(
+                    ENTITY_NOT_FOUND_ERROR_MSG_TEMPLATE, Account.class.getSimpleName(), "id", accountId);
             log.error(errorMsg);
             throw new EntityNotFoundException(errorMsg);
         }
+        return account.get();
+    }
 
-        Long oldRoleId = account.get().getRole().getId();
+    @Override
+    public Account changeRole(Long accountId, RoleName roleName) {
+        Account account = this.getAccount(accountId);
+        Long oldRoleId = account.getRole().getId();
 
-        Account accountWithNewRole = account.get();
         Role role = rolesFactory.getRoleByRoleName(roleName);
-        accountWithNewRole.setRole(role);
-        accountWithNewRole = accountService.update(accountWithNewRole);
+        account.setRole(role);
+        account = accountService.update(account);
 
         roleService.deleteById(oldRoleId);
-        return accountWithNewRole;
+        return account;
     }
 
     @Override
-    public boolean addPermissionsToAccount(List<Permission> permission, Long accountId) {
-        return false;
+    public Account addPermissionsToAccount(Long accountId, List<PermissionEnum> permissionEnums) {
+        Account account = this.getAccount(accountId);
+        Set<Permission> permissions = permissionEnums.stream()
+                .map(permissionEnum -> permissionService.getByPermissionName(permissionEnum)
+                        .orElseThrow(() -> new EntityNotFoundException(String.format(
+                                        ENTITY_NOT_FOUND_ERROR_MSG_TEMPLATE, Permission.class, "name", permissionEnum))))
+                .collect(Collectors.toSet());
+
+        account.getRole().getPermissions().addAll(permissions);
+        return accountService.update(account);
     }
 
     @Override
-    public boolean deletePermissions(List<Permission> permission, Long accountId) {
-        return false;
+    public Account deletePermissions(Long accountId, List<PermissionEnum> permissions) {
+        return null;
     }
 }
