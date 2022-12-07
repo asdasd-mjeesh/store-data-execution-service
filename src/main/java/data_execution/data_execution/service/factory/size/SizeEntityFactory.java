@@ -2,6 +2,7 @@ package data_execution.data_execution.service.factory.size;
 
 import data_execution.data_execution.entity.item.Size;
 import data_execution.data_execution.entity.item.SizeEnum;
+import data_execution.data_execution.entity.item.SizeType;
 import data_execution.data_execution.service.factory.ContextInitService;
 import data_execution.data_execution.service.factory.EntityContextSynchronizer;
 import data_execution.data_execution.service.item.SizeService;
@@ -35,12 +36,18 @@ public class SizeEntityFactory implements ContextInitService, EntityContextSynch
         sizes = new HashSet<>(sizeService.getAll());
     }
 
+    protected Set<Size> getSizesByType(SizeEnum[] sizeEnums, SizeType targetType) {
+        return Arrays.stream(sizeEnums)
+                .filter(sizeEnum -> sizeEnum.getType().equals(targetType))
+                .map(Size::new)
+                .collect(Collectors.toSet());
+    }
+
     @Override
     public void uploadToDatabase() {
         SizeEnum[] sizeEnums = SizeEnum.values();
-        sizes = Arrays.stream(sizeEnums)
-                .map(sizeEnum -> sizeService.create(new Size(sizeEnum)))
-                .collect(Collectors.toSet());
+        sizeService.createAll(getSizesByType(sizeEnums, SizeType.CLOTHES));
+        sizeService.createAll(getSizesByType(sizeEnums, SizeType.SHOES));
     }
 
     @Override

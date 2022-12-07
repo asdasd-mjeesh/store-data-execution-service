@@ -32,7 +32,7 @@ class ItemDatabaseServiceTest extends IntegrationTestBase {
 
     @Test
     void save() {
-        itemService.save(testItem);
+        itemService.create(testItem);
         verify(itemRepository, times(1)).save(testItem);
     }
 

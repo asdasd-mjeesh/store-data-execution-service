@@ -6,10 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import data_execution.data_execution.entity.account.Account;
 import data_execution.data_execution.entity.cart.Cart;
 import data_execution.data_execution.entity.cart.CartItem;
-import data_execution.data_execution.entity.item.Item;
-import data_execution.data_execution.entity.item.ItemType;
-import data_execution.data_execution.entity.item.Size;
-import data_execution.data_execution.entity.item.SizeEnum;
+import data_execution.data_execution.entity.item.*;
 import data_execution.data_execution.entity.order.Order;
 import data_execution.data_execution.entity.order.OrderItem;
 import data_execution.data_execution.entity.order.OrderStatusEnum;
@@ -74,7 +71,7 @@ public class TestingEntitiesFactory {
         var cartItem = CartItem.builder()
                 .item(this.getTestItem())
                 .count(1)
-                .size(new Size(SizeEnum.L))
+                .size(new Size(SizeEnum.L, SizeType.CLOTHES))
                 .build();
 
         testCart = Cart.builder()
@@ -147,7 +144,7 @@ public class TestingEntitiesFactory {
         item.setId(TEST_ID);
 
         var orderItems = List.of(
-                new OrderItem(testOrder, item, new Size(SizeEnum.S45), 1));
+                new OrderItem(testOrder, item, new Size(SizeEnum.M, SizeType.CLOTHES), 1));
         testOrder.setOrderItems(orderItems);
     }
 

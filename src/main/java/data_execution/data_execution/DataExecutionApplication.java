@@ -1,17 +1,11 @@
 package data_execution.data_execution;
 
-import data_execution.data_execution.entity.item.Size;
-import data_execution.data_execution.entity.item.SizeEnum;
 import data_execution.data_execution.service.factory.ContextInitService;
-import data_execution.data_execution.service.item.SizeService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class DataExecutionApplication {
@@ -21,7 +15,7 @@ public class DataExecutionApplication {
     }
 
     @Bean
-    CommandLineRunner createPermissions(
+    CommandLineRunner synchronizePermissions(
             @Qualifier("contextPermissionEntityFactory") ContextInitService contextInitService) {
         return args -> {
             contextInitService.init();
@@ -29,12 +23,10 @@ public class DataExecutionApplication {
     }
 
     @Bean
-    CommandLineRunner createSizes(SizeService sizeService) {
+    CommandLineRunner synchronizeSizes(
+            @Qualifier("sizeEntityFactory") ContextInitService contextInitService) {
         return args -> {
-            var sizes = Arrays.stream(SizeEnum.values())
-                    .map(Size::new)
-                    .collect(Collectors.toList());
-//            sizes.forEach(sizeService::create);
+            contextInitService.init();
         };
     }
 }

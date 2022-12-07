@@ -18,4 +18,12 @@ public class Size extends BaseEntity {
     @Column(name = "name")
     @Enumerated(value = EnumType.STRING)
     private SizeEnum name;
+    @Column(name = "type")
+    @Enumerated(value = EnumType.STRING)
+    private SizeType type;
+
+    public Size(SizeEnum name) {
+        this.name = name;
+        this.type = name.getType();
+    }
 }

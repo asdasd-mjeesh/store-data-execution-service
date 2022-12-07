@@ -16,7 +16,7 @@ public class ItemDatabaseService implements ItemService {
     }
 
     @Override
-    public Item save(Item item) {
+    public Item create(Item item) {
         return itemRepository.save(item);
     }
 

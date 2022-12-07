@@ -1,6 +1,6 @@
 package data_execution.data_execution.service.mapper.item;
 
-import data_execution.data_execution.dto.response.item.ItemDto;
+import data_execution.data_execution.dto.response.item.ItemResponse;
 import data_execution.data_execution.entity.item.Item;
 import data_execution.data_execution.entity.item.Size;
 import data_execution.data_execution.service.mapper.Mapper;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ItemMapper implements Mapper<ItemDto, Item> {
+public class ItemMapper implements Mapper<ItemResponse, Item> {
     private final ProducerMapper producerMapper;
 
     public ItemMapper(ProducerMapper producerMapper) {
@@ -19,8 +19,8 @@ public class ItemMapper implements Mapper<ItemDto, Item> {
     }
 
     @Override
-    public ItemDto map(Item from) {
-        return ItemDto.builder()
+    public ItemResponse map(Item from) {
+        return ItemResponse.builder()
                 .id(from.getId())
                 .title(from.getTitle())
                 .type(from.getType())
@@ -33,7 +33,7 @@ public class ItemMapper implements Mapper<ItemDto, Item> {
     }
 
     @Override
-    public List<ItemDto> map(List<Item> fromList) {
+    public List<ItemResponse> map(List<Item> fromList) {
         return fromList.stream()
                 .map(this::map)
                 .collect(Collectors.toList());

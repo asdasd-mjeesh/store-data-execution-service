@@ -11,7 +11,7 @@ import java.util.List;
 
 @Builder
 @Data
-public class ItemDto {
+public class ItemResponse {
     private Long id;
     private String title;
     private ItemType type;

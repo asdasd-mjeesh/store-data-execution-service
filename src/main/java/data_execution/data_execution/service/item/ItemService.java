@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ItemService {
-    Item save (Item item);
+    Item create (Item item);
     Optional<Item> getById(Long id);
     List<Item> getAll();
     boolean update(Item item);
