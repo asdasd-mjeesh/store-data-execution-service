@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface ItemService {
     Item create (Item item);
     Optional<Item> getById(Long id);
+    Item getByIdWithResultChecking(Long id);
     List<Item> getAll();
     Item update(Item item);
     boolean updateWithConfirmation(Item item);

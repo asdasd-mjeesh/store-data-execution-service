@@ -66,7 +66,7 @@ public class OrderMakerServiceServiceImpl implements OrderMakerService {
         orderService.save(order);
         cart.setCartItems(new ArrayList<>());
 
-        boolean isUpdated = cartService.update(cart);
+        boolean isUpdated = cartService.updateWithConfirmation(cart);
         if (!isUpdated) {
             log.warn("Cart with id=%s wasn't updated");
         }

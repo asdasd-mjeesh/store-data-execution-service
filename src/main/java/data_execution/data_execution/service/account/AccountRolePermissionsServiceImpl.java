@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,20 +28,9 @@ public class AccountRolePermissionsServiceImpl implements AccountRolePermissionS
         this.rolesFactory = rolesFactory;
     }
 
-    private Account getAccount(Long accountId) {
-        Optional<Account> account = accountService.getById(accountId);
-        if (account.isEmpty()) {
-            String errorMsg = String.format(
-                    ENTITY_NOT_FOUND_ERROR_MSG_TEMPLATE, Account.class.getSimpleName(), "id", accountId);
-            log.error(errorMsg);
-            throw new EntityNotFoundException(errorMsg);
-        }
-        return account.get();
-    }
-
     @Override
     public Account changeRole(Long accountId, RoleName roleName) {
-        Account account = this.getAccount(accountId);
+        Account account = accountService.getAccountByIdWithResultChecking(accountId);
         Long oldRoleId = account.getRole().getId();
 
         Role role = rolesFactory.getRoleByRoleName(roleName);
@@ -54,10 +42,10 @@ public class AccountRolePermissionsServiceImpl implements AccountRolePermissionS
     }
 
     /**
-     *      probably will better move this method to some 'MapperClass', but it uses only in current service,
-     *      so I leaved it here
+     *      probably will be better move this method to some 'MapperClass',
+     *      but it uses only in current service, so I leaved it here
      * */
-    private Set<Permission> getPermissionsFromEnums(List<PermissionEnum> permissionEnums) {
+    protected Set<Permission> getPermissionsFromEnums(List<PermissionEnum> permissionEnums) {
         return permissionEnums.stream()
                 .map(permissionEnum -> permissionService.getByPermissionName(permissionEnum)
                         .orElseThrow(() -> new EntityNotFoundException(String.format(
@@ -67,7 +55,7 @@ public class AccountRolePermissionsServiceImpl implements AccountRolePermissionS
 
     @Override
     public Account addPermissionsToAccount(Long accountId, List<PermissionEnum> permissionEnums) {
-        Account account = this.getAccount(accountId);
+        Account account = accountService.getAccountByIdWithResultChecking(accountId);
         Set<Permission> permissions = this.getPermissionsFromEnums(permissionEnums);
         account.getRole().getPermissions().addAll(permissions);
         return accountService.update(account);
@@ -75,7 +63,7 @@ public class AccountRolePermissionsServiceImpl implements AccountRolePermissionS
 
     @Override
     public Account deletePermissions(Long accountId, List<PermissionEnum> permissionEnums) {
-        Account account = this.getAccount(accountId);
+        Account account = accountService.getAccountByIdWithResultChecking(accountId);
         Set<Permission> permissions = this.getPermissionsFromEnums(permissionEnums);
         Set<Permission> filteredPermissions = account.getRole().getPermissions().stream()
                 .filter(permission -> !permissions.contains(permission))

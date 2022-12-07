@@ -64,8 +64,7 @@ public class AccountControllerV1 {
             var accountDto = accountResponseMapper.map(account.get());
             return ResponseEntity.ok(accountDto);
         }
-        return new ResponseEntity<>(String.format("Account with id=%s not found", id),
-                HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(String.format("Account with id=%s not found", id), HttpStatus.NOT_FOUND);
     }
 
     @PatchMapping("/")

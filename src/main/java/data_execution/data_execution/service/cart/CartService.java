@@ -6,5 +6,7 @@ import java.util.Optional;
 
 public interface CartService {
     Optional<Cart> getByAccountId(Long accountId);
-    boolean update(Cart cart);
+    Cart getCartByAccountIdWithResultChecking(Long accountId);
+    Cart update(Cart cart);
+    boolean updateWithConfirmation(Cart cart);
 }
