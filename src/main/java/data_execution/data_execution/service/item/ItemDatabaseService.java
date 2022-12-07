@@ -31,7 +31,12 @@ public class ItemDatabaseService implements ItemService {
     }
 
     @Override
-    public boolean update(Item item) {
+    public Item update(Item item) {
+        return itemRepository.save(item);
+    }
+
+    @Override
+    public boolean updateWithConfirmation(Item item) {
         var existedItem = itemRepository.findById(item.getId());
         if (existedItem.isPresent()) {
             itemRepository.save(item);

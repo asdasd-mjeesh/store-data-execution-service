@@ -24,7 +24,7 @@ public class ItemRequestMapper implements Mapper<Item, ItemRequest> {
     public Item map(ItemRequest from) {
         var item = Item.builder()
                 .title(from.getTitle())
-                .producer(producerRequestMapper.map(from.getProducerRequest()))
+                .producer(producerRequestMapper.map(from.getProducer()))
                 .type(from.getType())
                 .cost(from.getCost())
                 .sizes(from.getSizes().stream()

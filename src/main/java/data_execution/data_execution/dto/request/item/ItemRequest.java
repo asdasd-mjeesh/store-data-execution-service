@@ -20,6 +20,6 @@ public class ItemRequest {
     private String title;
     private ItemType type;
     private BigDecimal cost;
-    private ProducerRequest producerRequest;
+    private ProducerRequest producer;
     private List<SizeEnum> sizes;
 }

@@ -33,6 +33,22 @@ public class AccountControllerV1 {
         this.accountRequestMapper = accountRequestMapper;
     }
 
+    @PostMapping("/addPermissions")
+    public ResponseEntity<?> addPermissions(@RequestParam(name = "accountId") Long accountId,
+                                            @RequestBody List<PermissionEnum> permissionEnums) {
+        Account changedAccount = accountRolePermissionService.addPermissionsToAccount(accountId, permissionEnums);
+        AccountResponse accountResponse = accountResponseMapper.map(changedAccount);
+        return ResponseEntity.ok(accountResponse);
+    }
+
+    @PostMapping("/deletePermissions")
+    public ResponseEntity<?> deletePermissions(@RequestParam(name = "accountId") Long accountId,
+                                               @RequestBody List<PermissionEnum> permissionEnums) {
+        Account changedAccount = accountRolePermissionService.deletePermissions(accountId, permissionEnums);
+        AccountResponse accountResponse = accountResponseMapper.map(changedAccount);
+        return ResponseEntity.ok(accountResponse);
+    }
+
     @PostMapping("/")
     public ResponseEntity<?> createAccount(@RequestBody AccountRequest account) {
         var accountForSaving = accountRequestMapper.map(account);
@@ -53,7 +69,8 @@ public class AccountControllerV1 {
     }
 
     @PatchMapping("/")
-    public ResponseEntity<String> update(@RequestBody Account account) {
+    public ResponseEntity<String> update(@RequestBody AccountRequest accountRequest) {
+        var account = accountRequestMapper.map(accountRequest);
         boolean isUpdated = accountService.updateWithConfirmation(account);
         if (isUpdated) {
             return ResponseEntity.ok("Updated successfully");
@@ -74,22 +91,6 @@ public class AccountControllerV1 {
     public ResponseEntity<?> changeRole(@RequestParam(name = "accountId") Long accountId,
                                         @RequestParam(name = "roleName") RoleName roleName) {
         Account changedAccount = accountRolePermissionService.changeRole(accountId, roleName);
-        AccountResponse accountResponse = accountResponseMapper.map(changedAccount);
-        return ResponseEntity.ok(accountResponse);
-    }
-
-    @PostMapping("/addPermissions")
-    public ResponseEntity<?> addPermissions(@RequestParam(name = "accountId") Long accountId,
-                                            @RequestBody List<PermissionEnum> permissionEnums) {
-        Account changedAccount = accountRolePermissionService.addPermissionsToAccount(accountId, permissionEnums);
-        AccountResponse accountResponse = accountResponseMapper.map(changedAccount);
-        return ResponseEntity.ok(accountResponse);
-    }
-
-    @PostMapping("/deletePermissions")
-    public ResponseEntity<?> deletePermissions(@RequestParam(name = "accountId") Long accountId,
-                                               @RequestBody List<PermissionEnum> permissionEnums) {
-        Account changedAccount = accountRolePermissionService.deletePermissions(accountId, permissionEnums);
         AccountResponse accountResponse = accountResponseMapper.map(changedAccount);
         return ResponseEntity.ok(accountResponse);
     }

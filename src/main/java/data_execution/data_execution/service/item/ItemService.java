@@ -9,6 +9,7 @@ public interface ItemService {
     Item create (Item item);
     Optional<Item> getById(Long id);
     List<Item> getAll();
-    boolean update(Item item);
+    Item update(Item item);
+    boolean updateWithConfirmation(Item item);
     boolean deleteById(Long id);
 }
