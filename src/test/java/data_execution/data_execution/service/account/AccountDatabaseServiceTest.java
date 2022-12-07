@@ -5,8 +5,7 @@ import data_execution.data_execution.IntegrationTestBase;
 import data_execution.data_execution.TestingEntitiesFactory;
 import data_execution.data_execution.entity.account.Account;
 import data_execution.data_execution.repository.account.AccountRepository;
-import data_execution.data_execution.service.mapper.account.AccountMapper;
-import data_execution.data_execution.service.mapper.account.AccountSaveDtoMapper;
+import data_execution.data_execution.service.mapper.request.account.AccountRequestMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ class AccountDatabaseServiceTest extends IntegrationTestBase {
     private String accountEmail;
 
     @Autowired
-    private AccountSaveDtoMapper accountSaveDtoMapper;
+    private AccountRequestMapper accountRequestMapper;
     @Autowired
     private TestingEntitiesFactory testingEntitiesFactory;
     @MockBean

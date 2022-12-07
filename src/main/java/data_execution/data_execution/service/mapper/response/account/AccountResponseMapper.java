@@ -1,7 +1,7 @@
-package data_execution.data_execution.service.mapper.account;
+package data_execution.data_execution.service.mapper.response.account;
 
 import data_execution.data_execution.entity.account.Account;
-import data_execution.data_execution.dto.response.account.AccountDto;
+import data_execution.data_execution.dto.response.account.AccountResponse;
 import data_execution.data_execution.service.mapper.Mapper;
 import org.springframework.stereotype.Service;
 
@@ -9,27 +9,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AccountMapper implements Mapper<AccountDto, Account> {
-    private final RoleMapper roleMapper;
+public class AccountResponseMapper implements Mapper<AccountResponse, Account> {
+    private final RoleResponseMapper roleResponseMapper;
 
-    public AccountMapper(RoleMapper roleMapper) {
-        this.roleMapper = roleMapper;
+    public AccountResponseMapper(RoleResponseMapper roleResponseMapper) {
+        this.roleResponseMapper = roleResponseMapper;
     }
 
     @Override
-    public AccountDto map(Account from) {
-        return AccountDto.builder()
+    public AccountResponse map(Account from) {
+        return AccountResponse.builder()
                 .id(from.getId())
                 .name(from.getName())
                 .contact(from.getContact())
                 .email(from.getEmail())
                 .password(from.getPassword())
-                .role(roleMapper.map(from.getRole()))
+                .role(roleResponseMapper.map(from.getRole()))
                 .build();
     }
 
     @Override
-    public List<AccountDto> map(List<Account> fromList) {
+    public List<AccountResponse> map(List<Account> fromList) {
         return fromList.stream()
                 .map(this::map)
                 .collect(Collectors.toList());

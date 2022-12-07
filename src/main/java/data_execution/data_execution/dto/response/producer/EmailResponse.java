@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class EmailDto {
+public class EmailResponse {
     private Long id;
     private String address;
 }

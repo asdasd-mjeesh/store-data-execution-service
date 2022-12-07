@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Builder
 @Data
-public class RoleDto {
+public class RoleResponse {
     private RoleName name;
     private Set<PermissionEnum> permissions;
 }

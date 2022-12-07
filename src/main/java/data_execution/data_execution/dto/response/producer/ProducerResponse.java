@@ -7,9 +7,9 @@ import java.util.List;
 
 @Builder
 @Data
-public class ProducerDto {
+public class ProducerResponse {
     private Long id;
     private String name;
-    private List<EmailDto> emails;
-    private List<ContactDto> contacts;
+    private List<EmailResponse> emails;
+    private List<ContactResponse> contacts;
 }

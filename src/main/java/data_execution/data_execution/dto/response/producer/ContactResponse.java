@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class ContactDto {
+public class ContactResponse {
     private Long id;
     private String phoneNumber;
 }

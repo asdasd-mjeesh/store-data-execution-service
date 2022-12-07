@@ -5,11 +5,11 @@ import lombok.Data;
 
 @Builder
 @Data
-public class AccountDto {
+public class AccountResponse {
     private Long id;
     private String name;
     private String contact;
     private String email;
     private String password;
-    private RoleDto role;
+    private RoleResponse role;
 }
