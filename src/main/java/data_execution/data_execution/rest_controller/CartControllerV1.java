@@ -1,9 +1,10 @@
 package data_execution.data_execution.rest_controller;
 
 import data_execution.data_execution.dto.request.cart.BuyItemProperties;
-import data_execution.data_execution.entity.cart.Cart;
+import data_execution.data_execution.dto.response.cart.CartResponse;
 import data_execution.data_execution.service.cart.CartActionService;
 import data_execution.data_execution.service.cart.CartService;
+import data_execution.data_execution.service.mapper.response.cart.CartResponseMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,41 +13,51 @@ import org.springframework.web.bind.annotation.*;
 public class CartControllerV1 {
     private final CartService cartService;
     private final CartActionService cartActionService;
+    private final CartResponseMapper cartResponseMapper;
 
-    public CartControllerV1(CartService cartService, CartActionService cartActionService) {
+    public CartControllerV1(CartService cartService,
+                            CartActionService cartActionService,
+                            CartResponseMapper cartResponseMapper) {
         this.cartService = cartService;
         this.cartActionService = cartActionService;
+        this.cartResponseMapper = cartResponseMapper;
     }
 
     @GetMapping("/{accountId}")
-    public ResponseEntity<Cart> getByAccountId(@PathVariable(name = "accountId") Long accountId) {
-        return ResponseEntity.ok(cartService.getByAccountId(accountId).get());
+    public ResponseEntity<CartResponse> getByAccountId(@PathVariable(name = "accountId") Long accountId) {
+        var cart = cartService.getCartByAccountIdWithResultChecking(accountId);
+        var cartResponse = cartResponseMapper.map(cart);
+        return ResponseEntity.ok(cartResponse);
     }
 
     @PostMapping("/addItem")
-    public ResponseEntity<Cart> addItem(@RequestParam(name = "accountId") Long accountId,
+    public ResponseEntity<CartResponse> addItem(@RequestParam(name = "accountId") Long accountId,
                                         @RequestBody BuyItemProperties buyItemProperties) {
         var updatedCart = cartActionService.addItem(accountId, buyItemProperties);
-        return ResponseEntity.ok(updatedCart);
+        var updatedCartDto = cartResponseMapper.map(updatedCart);
+        return ResponseEntity.ok(updatedCartDto);
     }
 
     @PatchMapping("/editItem")
-    public ResponseEntity<Cart> editItem(@RequestParam(name = "accountId") Long accountId,
+    public ResponseEntity<CartResponse> editItem(@RequestParam(name = "accountId") Long accountId,
                                          @RequestBody BuyItemProperties buyItemProperties) {
         var updatedCart = cartActionService.editItem(accountId, buyItemProperties);
-        return ResponseEntity.ok(updatedCart);
+        var updatedCartDto = cartResponseMapper.map(updatedCart);
+        return ResponseEntity.ok(updatedCartDto);
     }
 
     @DeleteMapping("/deleteItem")
-    public ResponseEntity<Cart> deleteItem(@RequestParam(name = "accountId") Long accountId,
+    public ResponseEntity<CartResponse> deleteItem(@RequestParam(name = "accountId") Long accountId,
                                            @RequestParam(name = "cartItemId") Long cartItemId) {
         var updatedCart = cartActionService.deleteItem(accountId, cartItemId);
-        return ResponseEntity.ok(updatedCart);
+        var updatedCartDto = cartResponseMapper.map(updatedCart);
+        return ResponseEntity.ok(updatedCartDto);
     }
 
     @DeleteMapping("/deleteAllItems")
-    public ResponseEntity<Cart> deleteAllItems(@RequestParam(name = "accountId") Long accountId) {
+    public ResponseEntity<CartResponse> deleteAllItems(@RequestParam(name = "accountId") Long accountId) {
         var updatedCart = cartActionService.deleteAllItems(accountId);
-        return ResponseEntity.ok(updatedCart);
+        var updatedCartDto = cartResponseMapper.map(updatedCart);
+        return ResponseEntity.ok(updatedCartDto);
     }
 }

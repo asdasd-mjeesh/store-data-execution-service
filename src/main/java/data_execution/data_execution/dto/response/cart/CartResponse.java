@@ -1,4 +1,4 @@
-package data_execution.data_execution.dto.request.cart;
+package data_execution.data_execution.dto.response.cart;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +12,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartRequest {
+public class CartResponse {
     private Long id;
-    private List<CartItemRequest> cartItems;
+    private List<CartItemResponse> cartItems;
     private BigDecimal currentTotalPrice;
 }

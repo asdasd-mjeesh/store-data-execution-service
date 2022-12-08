@@ -1,6 +1,6 @@
-package data_execution.data_execution.dto.request.cart;
+package data_execution.data_execution.dto.response.cart;
 
-import data_execution.data_execution.dto.request.item.ItemRequest;
+import data_execution.data_execution.dto.response.item.ItemResponse;
 import data_execution.data_execution.entity.item.SizeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartItemRequest {
+public class CartItemResponse {
     private Long id;
-    private ItemRequest itemRequest;
+    private ItemResponse itemResponse;
     private SizeEnum size;
     private Integer count;
 }
