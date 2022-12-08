@@ -26,9 +26,8 @@ public class SizeEntityFactory implements ContextInitService, EntityContextSynch
     public void init() {
         if (sizeService.getSizesCount() != SizeEnum.values().length) {
             uploadToDatabase();
-        } else {
-            loadFromDatabase();
         }
+        loadFromDatabase();
     }
 
     @Override

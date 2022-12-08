@@ -26,7 +26,7 @@ public class CartDatabaseService implements CartService {
     public Cart getCartByAccountIdWithResultChecking(Long accountId) {
         var cart = cartRepository.findById(accountId);
         if (cart.isEmpty()) {
-            String errorMsg = String.format("Cart with account_id=%s now found", accountId);
+            String errorMsg = String.format("Cart with account_id=%s not found", accountId);
             log.error(errorMsg);
             throw new EntityNotFoundException(errorMsg);
         }

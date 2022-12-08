@@ -5,15 +5,14 @@ import data_execution.data_execution.entity.cart.Cart;
 import data_execution.data_execution.entity.cart.CartItem;
 import data_execution.data_execution.entity.item.Item;
 import data_execution.data_execution.entity.item.Size;
+import data_execution.data_execution.exception.EntityNotFoundException;
 import data_execution.data_execution.service.factory.size.SizeFactory;
 import data_execution.data_execution.service.item.ItemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -36,13 +35,15 @@ public class CartActionServiceImpl implements CartActionService {
 
         List<CartItem> cartsItems = cart.getCartItems();
         Optional<CartItem> itemInTheCart = cartsItems.stream()
-                .filter(cartItem -> cartItem.getItem().equals(item))
+                .filter(cartItem -> cartItem.getItem().equals(item) &&
+                                    cartItem.getSize().getName().equals(buyItemProperties.getSize()))
                 .findAny();
         if (itemInTheCart.isPresent()) {
             itemInTheCart.get().setCount(itemInTheCart.get().getCount() + buyItemProperties.getCount());
         } else {
-            cart.addItem(new CartItem(item, size, buyItemProperties.getCount()));
+            cartsItems.add(new CartItem(item, size, buyItemProperties.getCount()));
         }
+        cart.calculateCurrentTotalPrice();
         return cartService.update(cart);
     }
 
@@ -58,7 +59,7 @@ public class CartActionServiceImpl implements CartActionService {
                     cartItem.setSize(size);
                     cartItem.setCount(buyItemProperties.getCount());
                 });
-
+        cart.calculateCurrentTotalPrice();
         return cartService.update(cart);
     }
 
@@ -66,19 +67,28 @@ public class CartActionServiceImpl implements CartActionService {
     public Cart deleteItem(Long accountId, Long cartItemId) {
         Cart cart = cartService.getCartByAccountIdWithResultChecking(accountId);
         List<CartItem> cartsItems = cart.getCartItems();
+        System.out.println(cartsItems);
 
-        List<CartItem> newCartItems = cartsItems.stream()
-                .filter(cartItem -> cartItem.getId() != cartItemId)
-                .collect(Collectors.toList());
+        Optional<CartItem> itemToDelete = cartsItems.stream()
+                .filter(cartItem -> cartItem.getId() == cartItemId)
+                .findAny();
 
-        cart.setCartItems(newCartItems);
+        if (itemToDelete.isEmpty()) {
+            String errorMsg = String.format("CartItem with id=%s not found", cartItemId);
+            log.error(errorMsg);
+            throw new EntityNotFoundException(errorMsg);
+        }
+        cartsItems.remove(itemToDelete.get());
+        cart.calculateCurrentTotalPrice();
         return cartService.update(cart);
     }
 
     @Override
     public Cart deleteAllItems(Long accountId) {
         Cart cart = cartService.getCartByAccountIdWithResultChecking(accountId);
-        cart.setCartItems(new ArrayList<>());
+        List<CartItem> cartItems = cart.getCartItems();
+        cartItems.removeAll(cartItems);
+        cart.calculateCurrentTotalPrice();
         return cartService.update(cart);
     }
 }
