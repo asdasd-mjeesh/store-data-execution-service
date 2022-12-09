@@ -4,7 +4,7 @@ import data_execution.data_execution.entity.account.Account;
 import data_execution.data_execution.entity.cart.Cart;
 import data_execution.data_execution.entity.order.Order;
 import data_execution.data_execution.entity.order.OrderItem;
-import data_execution.data_execution.entity.order.OrderStatusEnum;
+import data_execution.data_execution.entity.order.OrderStatus;
 import data_execution.data_execution.service.account.AccountService;
 import data_execution.data_execution.service.cart.CartService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class OrderMakerServiceImpl implements OrderMakerService {
+public class OrderMakerServiceImpl implements OrderCreatorService {
     private final CartService cartService;
     private final OrderService orderService;
     private final AccountService accountService;
@@ -32,7 +32,7 @@ public class OrderMakerServiceImpl implements OrderMakerService {
         Order order = Order.builder()
                 .account(account)
                 .orderItems(null)
-                .status(OrderStatusEnum.IN_PROCESS)
+                .status(OrderStatus.IN_PROCESS)
                 .buyDate(LocalDateTime.now())
                 .build();
         List<OrderItem> orderItems = cart.getCartItems().stream()
@@ -54,11 +54,9 @@ public class OrderMakerServiceImpl implements OrderMakerService {
     }
 
     @Override
-    public Order buy(Long accountId) {
+    public Order createOrder(Long accountId) {
         var account = accountService.getAccountByIdWithResultChecking(accountId);
         var cart = account.getCart();
-        account.getCart().getCartItems().forEach(System.out::println);
-
         var order = this.buildOrderFromCart(cart, account);
         order = orderService.save(order);
 

@@ -26,10 +26,11 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "order_id")
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @Column(name = "status")
-    private OrderStatusEnum status;
     @Column(name = "total_price")
     private BigDecimal totalPrice;
     @Column(name = "buy_date")
     private LocalDateTime buyDate;
+    @Column(name = "status")
+    @Enumerated(value = EnumType.STRING)
+    private OrderStatus status;
 }

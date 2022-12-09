@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface OrderService {
     Order save(Order order);
+    Order getByIdWithResultChecking(Long id);
     Optional<Order> getById(Long id);
     List<Order> getAll();
     boolean update(Order order);

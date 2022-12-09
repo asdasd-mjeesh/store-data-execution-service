@@ -1,5 +1,5 @@
 package data_execution.data_execution.entity.order;
 
-public enum OrderStatusEnum {
+public enum OrderStatus {
     IN_PROCESS, DONE
 }

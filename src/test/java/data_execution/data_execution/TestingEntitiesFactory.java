@@ -9,7 +9,7 @@ import data_execution.data_execution.entity.cart.CartItem;
 import data_execution.data_execution.entity.item.*;
 import data_execution.data_execution.entity.order.Order;
 import data_execution.data_execution.entity.order.OrderItem;
-import data_execution.data_execution.entity.order.OrderStatusEnum;
+import data_execution.data_execution.entity.order.OrderStatus;
 import data_execution.data_execution.entity.producer.Contact;
 import data_execution.data_execution.entity.producer.Email;
 import data_execution.data_execution.entity.producer.Producer;
@@ -137,7 +137,7 @@ public class TestingEntitiesFactory {
         testOrder = Order.builder()
                 .account(account)
                 .buyDate(LocalDateTime.now())
-                .status(OrderStatusEnum.IN_PROCESS)
+                .status(OrderStatus.IN_PROCESS)
                 .totalPrice(BigDecimal.valueOf(100.000))
                 .build();
 
