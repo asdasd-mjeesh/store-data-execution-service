@@ -24,7 +24,9 @@ public class Account extends BaseEntity {
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "role_id")
     private Role role;
     @OneToOne(cascade = CascadeType.ALL)
-    private Cart cart = new Cart();
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 }

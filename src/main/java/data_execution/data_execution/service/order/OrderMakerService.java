@@ -1,6 +1,7 @@
 package data_execution.data_execution.service.order;
 
-public interface OrderMakerService {
+import data_execution.data_execution.entity.order.Order;
 
-    void buy(Long accountId);
+public interface OrderMakerService {
+    Order buy(Long accountId);
 }

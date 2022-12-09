@@ -5,8 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Builder
 @EqualsAndHashCode(callSuper = true)
@@ -18,7 +17,7 @@ import java.util.List;
 public class Cart extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "cart_id")
-    private List<CartItem> cartItems = new ArrayList<>();
+    private Set<CartItem> cartItems;
 
     @Column(name = "current_total_price")
     private BigDecimal currentTotalPrice = BigDecimal.ZERO;

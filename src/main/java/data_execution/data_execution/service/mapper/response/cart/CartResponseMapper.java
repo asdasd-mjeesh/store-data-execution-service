@@ -5,6 +5,7 @@ import data_execution.data_execution.entity.cart.Cart;
 import data_execution.data_execution.service.mapper.Mapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +20,8 @@ public class CartResponseMapper implements Mapper<CartResponse, Cart> {
     @Override
     public CartResponse map(Cart from) {
         CartResponse cartResponse = CartResponse.builder()
-                .cartItems(cartItemResponseMapper.map(from.getCartItems()))
+                .cartItems(cartItemResponseMapper.map(
+                        new ArrayList<>(from.getCartItems())))
                 .currentTotalPrice(from.getCurrentTotalPrice())
                 .build();
         cartResponse.setId(from.getId());

@@ -40,8 +40,9 @@ public class CartControllerV1 {
 
     @PatchMapping("/editItem")
     public ResponseEntity<CartResponse> editItem(@RequestParam(name = "accountId") Long accountId,
+                                         @RequestParam(name = "cartItemId") Long cartItemId,
                                          @RequestBody BuyItemProperties buyItemProperties) {
-        var updatedCart = cartActionService.editItem(accountId, buyItemProperties);
+        var updatedCart = cartActionService.editItem(accountId, cartItemId, buyItemProperties);
         var updatedCartDto = cartResponseMapper.map(updatedCart);
         return ResponseEntity.ok(updatedCartDto);
     }

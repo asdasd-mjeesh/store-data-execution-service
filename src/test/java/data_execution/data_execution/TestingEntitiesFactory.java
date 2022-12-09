@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,7 +76,7 @@ public class TestingEntitiesFactory {
                 .build();
 
         testCart = Cart.builder()
-                .cartItems(List.of(cartItem))
+                .cartItems(Set.of(cartItem))
                 .currentTotalPrice(BigDecimal.ONE)
                 .build();
     }

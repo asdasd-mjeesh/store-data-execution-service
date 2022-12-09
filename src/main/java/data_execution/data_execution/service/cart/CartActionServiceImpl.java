@@ -11,8 +11,8 @@ import data_execution.data_execution.service.item.ItemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -33,7 +33,7 @@ public class CartActionServiceImpl implements CartActionService {
         Item item = itemService.getByIdWithResultChecking(buyItemProperties.getItemId());
         Size size = sizeFactory.getSizeByEnum(buyItemProperties.getSize());
 
-        List<CartItem> cartsItems = cart.getCartItems();
+        Set<CartItem> cartsItems = cart.getCartItems();
         Optional<CartItem> itemInTheCart = cartsItems.stream()
                 .filter(cartItem -> cartItem.getItem().equals(item) &&
                                     cartItem.getSize().getName().equals(buyItemProperties.getSize()))
@@ -48,13 +48,13 @@ public class CartActionServiceImpl implements CartActionService {
     }
 
     @Override
-    public Cart editItem(Long accountId, BuyItemProperties buyItemProperties) {
+    public Cart editItem(Long accountId, Long cartItemId, BuyItemProperties buyItemProperties) {
         Cart cart = cartService.getCartByAccountIdWithResultChecking(accountId);
         Size size = sizeFactory.getSizeByEnum(buyItemProperties.getSize());
-        List<CartItem> cartsItems = cart.getCartItems();
+        Set<CartItem> cartsItems = cart.getCartItems();
 
         cartsItems.stream()
-                .filter(cartItem -> cartItem.getItem().getId() == buyItemProperties.getItemId())
+                .filter(cartItem -> cartItem.getId() == cartItemId)
                 .forEach(cartItem -> {
                     cartItem.setSize(size);
                     cartItem.setCount(buyItemProperties.getCount());
@@ -66,7 +66,7 @@ public class CartActionServiceImpl implements CartActionService {
     @Override
     public Cart deleteItem(Long accountId, Long cartItemId) {
         Cart cart = cartService.getCartByAccountIdWithResultChecking(accountId);
-        List<CartItem> cartsItems = cart.getCartItems();
+        Set<CartItem> cartsItems = cart.getCartItems();
         System.out.println(cartsItems);
 
         Optional<CartItem> itemToDelete = cartsItems.stream()
@@ -86,7 +86,7 @@ public class CartActionServiceImpl implements CartActionService {
     @Override
     public Cart deleteAllItems(Long accountId) {
         Cart cart = cartService.getCartByAccountIdWithResultChecking(accountId);
-        List<CartItem> cartItems = cart.getCartItems();
+        Set<CartItem> cartItems = cart.getCartItems();
         cartItems.removeAll(cartItems);
         cart.calculateCurrentTotalPrice();
         return cartService.update(cart);
