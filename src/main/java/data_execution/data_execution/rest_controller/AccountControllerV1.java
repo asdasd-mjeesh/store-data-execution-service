@@ -34,37 +34,34 @@ public class AccountControllerV1 {
     }
 
     @PostMapping("/addPermissions")
-    public ResponseEntity<?> addPermissions(@RequestParam(name = "accountId") Long accountId,
-                                            @RequestBody List<PermissionEnum> permissionEnums) {
+    public ResponseEntity<AccountResponse> addPermissions(@RequestParam(name = "accountId") Long accountId,
+                                                          @RequestBody List<PermissionEnum> permissionEnums) {
         Account changedAccount = accountRolePermissionService.addPermissionsToAccount(accountId, permissionEnums);
         AccountResponse accountResponse = accountResponseMapper.map(changedAccount);
         return ResponseEntity.ok(accountResponse);
     }
 
     @PostMapping("/deletePermissions")
-    public ResponseEntity<?> deletePermissions(@RequestParam(name = "accountId") Long accountId,
-                                               @RequestBody List<PermissionEnum> permissionEnums) {
-        Account changedAccount = accountRolePermissionService.deletePermissions(accountId, permissionEnums);
-        AccountResponse accountResponse = accountResponseMapper.map(changedAccount);
+    public ResponseEntity<AccountResponse> deletePermissions(@RequestParam(name = "accountId") Long accountId,
+                                                             @RequestBody List<PermissionEnum> permissionEnums) {
+        var changedAccount = accountRolePermissionService.deletePermissions(accountId, permissionEnums);
+        var accountResponse = accountResponseMapper.map(changedAccount);
         return ResponseEntity.ok(accountResponse);
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> createAccount(@RequestBody AccountRequest account) {
+    public ResponseEntity<AccountResponse> createAccount(@RequestBody AccountRequest account) {
         var accountForSaving = accountRequestMapper.map(account);
         accountForSaving = accountService.create(accountForSaving);
-        var accountDto = accountResponseMapper.map(accountForSaving);
-        return ResponseEntity.ok(accountDto);
+        var accountResponse = accountResponseMapper.map(accountForSaving);
+        return ResponseEntity.ok(accountResponse);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable(name = "id") Long id) {
-        var account = accountService.getById(id);
-        if (account.isPresent()) {
-            var accountDto = accountResponseMapper.map(account.get());
-            return ResponseEntity.ok(accountDto);
-        }
-        return new ResponseEntity<>(String.format("Account with id=%s not found", id), HttpStatus.NOT_FOUND);
+    public ResponseEntity<AccountResponse> getById(@PathVariable(name = "id") Long id) {
+        var account = accountService.getAccountByIdWithResultChecking(id);
+        var accountResponse = accountResponseMapper.map(account);
+        return ResponseEntity.ok(accountResponse);
     }
 
     @PatchMapping("/")
@@ -87,7 +84,7 @@ public class AccountControllerV1 {
     }
 
     @PostMapping("/changeRole")
-    public ResponseEntity<?> changeRole(@RequestParam(name = "accountId") Long accountId,
+    public ResponseEntity<AccountResponse> changeRole(@RequestParam(name = "accountId") Long accountId,
                                         @RequestParam(name = "roleName") RoleName roleName) {
         Account changedAccount = accountRolePermissionService.changeRole(accountId, roleName);
         AccountResponse accountResponse = accountResponseMapper.map(changedAccount);

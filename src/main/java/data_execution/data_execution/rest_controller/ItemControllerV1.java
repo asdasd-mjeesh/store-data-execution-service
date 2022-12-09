@@ -28,22 +28,19 @@ public class ItemControllerV1 {
     public ResponseEntity<ItemResponse> createItem(@RequestBody ItemRequest itemRequest) {
         var item = itemRequestMapper.map(itemRequest);
         item = itemService.create(item);
-        var savedItemDto = itemResponseMapper.map(item);
-        return ResponseEntity.ok(savedItemDto);
+        var savedItemResponse = itemResponseMapper.map(item);
+        return ResponseEntity.ok(savedItemResponse);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable(name = "id") Long id) {
-        var item = itemService.getById(id);
-        if (item.isEmpty()) {
-            return new ResponseEntity<>(String.format("Item with id=%s not found", id), HttpStatus.NOT_FOUND);
-        }
-        var itemResponse = itemResponseMapper.map(item.get());
+    public ResponseEntity<ItemResponse> getById(@PathVariable(name = "id") Long id) {
+        var item = itemService.getByIdWithResultChecking(id);
+        var itemResponse = itemResponseMapper.map(item);
         return ResponseEntity.ok(itemResponse);
     }
 
     @PatchMapping("/")
-    public ResponseEntity<?> update(@RequestBody ItemRequest itemRequest) {
+    public ResponseEntity<ItemResponse> update(@RequestBody ItemRequest itemRequest) {
         var item = itemRequestMapper.map(itemRequest);
         item = itemService.update(item);
         var itemResponse = itemResponseMapper.map(item);
@@ -51,7 +48,7 @@ public class ItemControllerV1 {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<String> deleteById(@PathVariable(name = "id") Long id) {
         boolean isDeleted = itemService.deleteById(id);
         if (isDeleted) {
             return ResponseEntity.ok("Deleted successfully");

@@ -32,33 +32,33 @@ public class CartControllerV1 {
 
     @PostMapping("/addItem")
     public ResponseEntity<CartResponse> addItem(@RequestParam(name = "accountId") Long accountId,
-                                        @RequestBody BuyItemProperties buyItemProperties) {
+                                                @RequestBody BuyItemProperties buyItemProperties) {
         var updatedCart = cartActionService.addItem(accountId, buyItemProperties);
-        var updatedCartDto = cartResponseMapper.map(updatedCart);
-        return ResponseEntity.ok(updatedCartDto);
+        var updatedCartResponse = cartResponseMapper.map(updatedCart);
+        return ResponseEntity.ok(updatedCartResponse);
     }
 
     @PatchMapping("/editItem")
     public ResponseEntity<CartResponse> editItem(@RequestParam(name = "accountId") Long accountId,
-                                         @RequestParam(name = "cartItemId") Long cartItemId,
-                                         @RequestBody BuyItemProperties buyItemProperties) {
+                                                 @RequestParam(name = "cartItemId") Long cartItemId,
+                                                 @RequestBody BuyItemProperties buyItemProperties) {
         var updatedCart = cartActionService.editItem(accountId, cartItemId, buyItemProperties);
-        var updatedCartDto = cartResponseMapper.map(updatedCart);
-        return ResponseEntity.ok(updatedCartDto);
+        var updatedCartResponse = cartResponseMapper.map(updatedCart);
+        return ResponseEntity.ok(updatedCartResponse);
     }
 
     @DeleteMapping("/deleteItem")
     public ResponseEntity<CartResponse> deleteItem(@RequestParam(name = "accountId") Long accountId,
-                                           @RequestParam(name = "cartItemId") Long cartItemId) {
+                                                   @RequestParam(name = "cartItemId") Long cartItemId) {
         var updatedCart = cartActionService.deleteItem(accountId, cartItemId);
-        var updatedCartDto = cartResponseMapper.map(updatedCart);
-        return ResponseEntity.ok(updatedCartDto);
+        var updatedCartResponse = cartResponseMapper.map(updatedCart);
+        return ResponseEntity.ok(updatedCartResponse);
     }
 
     @DeleteMapping("/deleteAllItems")
     public ResponseEntity<CartResponse> deleteAllItems(@RequestParam(name = "accountId") Long accountId) {
         var updatedCart = cartActionService.deleteAllItems(accountId);
-        var updatedCartDto = cartResponseMapper.map(updatedCart);
-        return ResponseEntity.ok(updatedCartDto);
+        var updatedCartResponse = cartResponseMapper.map(updatedCart);
+        return ResponseEntity.ok(updatedCartResponse);
     }
 }

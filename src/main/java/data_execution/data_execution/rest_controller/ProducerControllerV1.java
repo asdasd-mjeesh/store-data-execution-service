@@ -29,8 +29,8 @@ public class ProducerControllerV1 {
     public ResponseEntity<ProducerResponse> createProducer(@RequestBody ProducerRequest producerRequest) {
         var producer = producerRequestMapper.map(producerRequest);
         producer = producerService.create(producer);
-        var producerDto = producerResponseMapper.map(producer);
-        return ResponseEntity.ok(producerDto);
+        var producerResponse = producerResponseMapper.map(producer);
+        return ResponseEntity.ok(producerResponse);
     }
 
     @GetMapping("/{id}")
@@ -46,8 +46,8 @@ public class ProducerControllerV1 {
     @PatchMapping("/")
     public ResponseEntity<ProducerResponse> update(@RequestBody Producer producer) {
         var updatedProducer = producerService.update(producer);
-        var updatedProducerDto = producerResponseMapper.map(updatedProducer);
-        return ResponseEntity.ok(updatedProducerDto);
+        var updatedProducerResponse = producerResponseMapper.map(updatedProducer);
+        return ResponseEntity.ok(updatedProducerResponse);
     }
 
     @DeleteMapping("/{id}")
