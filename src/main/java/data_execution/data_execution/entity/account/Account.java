@@ -3,6 +3,7 @@ package data_execution.data_execution.entity.account;
 import data_execution.data_execution.entity.BaseEntity;
 import data_execution.data_execution.entity.cart.Cart;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -23,6 +24,7 @@ public class Account extends BaseEntity {
     private String email;
     @Column(name = "password")
     private String password;
+    @CreationTimestamp
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;
     @Column(name = "status")
