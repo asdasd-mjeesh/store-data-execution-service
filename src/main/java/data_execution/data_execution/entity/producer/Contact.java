@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(schema = "store_domain", name = "producers_phone")
+@Table(schema = "store_domain", name = "phone")
 public class Contact extends BaseEntity {
     @Column(name = "phone_number")
     private String phoneNumber;

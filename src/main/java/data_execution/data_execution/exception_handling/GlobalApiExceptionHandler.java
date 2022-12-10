@@ -17,7 +17,7 @@ public class GlobalApiExceptionHandler {
         var responseStatus = HttpStatus.NOT_FOUND;
         var exceptionDetails = ExceptionResponseDetails.builder()
                 .message(e.getMessage())
-                .exception(e)
+                .exception(e.getCause())
                 .httpStatus(responseStatus)
                 .time(LocalDateTime.now())
                 .build();

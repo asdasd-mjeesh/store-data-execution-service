@@ -6,6 +6,7 @@ import data_execution.data_execution.repository.account.AccountRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ public class AccountDatabaseService implements AccountService {
 
     @Override
     public Account create(Account account) {
+        account.setRegistrationDate(LocalDateTime.now());
         return accountRepository.save(account);
     }
 
@@ -40,8 +42,14 @@ public class AccountDatabaseService implements AccountService {
     }
 
     @Override
-    public Optional<Account> getByEmail(String email) {
-        return accountRepository.findByEmail(email);
+    public Account getByEmail(String email) {
+        Optional<Account> account = accountRepository.findByEmail(email);
+        if (account.isEmpty()) {
+            String errorMsg = String.format("Account with email=%s not found", email);
+            log.error(errorMsg);
+            throw new EntityNotFoundException(errorMsg);
+        }
+        return account.get();
     }
 
     @Override

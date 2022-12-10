@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(schema = "store_domain", name = "producers_email")
+@Table(schema = "store_domain", name = "email")
 public class Email extends BaseEntity {
     @Column(name = "address")
     private String address;

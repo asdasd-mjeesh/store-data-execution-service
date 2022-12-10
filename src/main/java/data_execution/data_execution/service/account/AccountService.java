@@ -9,7 +9,7 @@ public interface AccountService {
     Account create(Account account);
     Optional<Account> getById(Long id);
     Account getAccountByIdWithResultChecking(Long id);
-    Optional<Account> getByEmail(String email);
+    Account getByEmail(String email);
     List<Account> getAll();
     boolean updateWithConfirmation(Account account);
     Account update(Account account);

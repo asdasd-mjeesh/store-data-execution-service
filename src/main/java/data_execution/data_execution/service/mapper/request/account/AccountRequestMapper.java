@@ -27,6 +27,8 @@ public class AccountRequestMapper implements Mapper<Account, AccountRequest> {
                 .password(from.getPassword())
                 .cart(new Cart())
                 .role(rolesFactory.getRoleByRoleName(from.getRoleName()))
+                .registrationDate(from.getRegistrationDate())
+                .status(from.getStatus())
                 .build();
 
         if (from.getId() != null) {

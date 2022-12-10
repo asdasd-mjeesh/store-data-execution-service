@@ -5,6 +5,7 @@ import data_execution.data_execution.entity.cart.Cart;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Builder
 @EqualsAndHashCode(callSuper = true)
@@ -22,6 +23,11 @@ public class Account extends BaseEntity {
     private String email;
     @Column(name = "password")
     private String password;
+    @Column(name = "registration_date")
+    private LocalDateTime registrationDate;
+    @Column(name = "status")
+    @Enumerated(value = EnumType.STRING)
+    private AccountStatus status;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")

@@ -25,6 +25,8 @@ public class AccountResponseMapper implements Mapper<AccountResponse, Account> {
                 .email(from.getEmail())
                 .password(from.getPassword())
                 .role(roleResponseMapper.map(from.getRole()))
+                .registrationDate(from.getRegistrationDate())
+                .status(from.getStatus())
                 .build();
     }
 
