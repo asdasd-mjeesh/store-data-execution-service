@@ -20,28 +20,28 @@ public class AccountFilterRepositoryImpl
     private EntityManager entityManager;
 
     @Override
-    public Predicate[] buildPredicates(AccountFilter filter, CriteriaBuilder cb, Root<Account> account) {
+    public Predicate[] buildPredicates(AccountFilter filter, CriteriaBuilder cb, Root<Account> rootEntity) {
         List<Predicate> predicates = new ArrayList<>();
         if (filter.getName() != null) {
-            predicates.add(cb.like(account.get("name"), filter.getName()));
+            predicates.add(cb.like(rootEntity.get("name"), filter.getName()));
         }
         if (filter.getContact() != null) {
-            predicates.add(cb.like(account.get("contact"), filter.getContact()));
+            predicates.add(cb.like(rootEntity.get("contact"), filter.getContact()));
         }
         if (filter.getEmail() != null) {
-            predicates.add(cb.like(account.get("email"), filter.getEmail()));
+            predicates.add(cb.like(rootEntity.get("email"), filter.getEmail()));
         }
         if (filter.getStatus() != null) {
-            predicates.add(cb.equal(account.get("status"), filter.getStatus()));
+            predicates.add(cb.equal(rootEntity.get("status"), filter.getStatus()));
         }
         if (filter.getRole() != null) {
-            predicates.add(cb.equal(account.get("role").get("name"), filter.getRole()));
+            predicates.add(cb.equal(rootEntity.get("role").get("name"), filter.getRole()));
         }
         if (filter.getMinimalRegistrationDate() != null) {
-            predicates.add(cb.greaterThanOrEqualTo(account.get("registrationDate"), filter.getMinimalRegistrationDate()));
+            predicates.add(cb.greaterThanOrEqualTo(rootEntity.get("registrationDate"), filter.getMinimalRegistrationDate()));
         }
         if (filter.getMaximalRegistrationDate() != null) {
-            predicates.add(cb.lessThanOrEqualTo(account.get("registrationDate"), filter.getMaximalRegistrationDate()));
+            predicates.add(cb.lessThanOrEqualTo(rootEntity.get("registrationDate"), filter.getMaximalRegistrationDate()));
         }
         return predicates.toArray(Predicate[]::new);
     }

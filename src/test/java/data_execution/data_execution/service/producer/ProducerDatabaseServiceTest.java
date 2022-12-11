@@ -43,12 +43,6 @@ class ProducerDatabaseServiceTest extends IntegrationTestBase {
     }
 
     @Test
-    void getAll() {
-        producerService.getAll();
-        verify(producerRepository, times(1)).findAll();
-    }
-
-    @Test
     void update() {
         testProducer.setId(TEST_ID);
         when(producerRepository.findById(TEST_ID)).thenReturn(Optional.of(testProducer));

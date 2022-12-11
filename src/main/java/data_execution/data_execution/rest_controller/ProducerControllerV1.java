@@ -1,5 +1,6 @@
 package data_execution.data_execution.rest_controller;
 
+import data_execution.data_execution.dto.filter.ProducerFilter;
 import data_execution.data_execution.dto.request.producer.ProducerRequest;
 import data_execution.data_execution.dto.response.producer.ProducerResponse;
 import data_execution.data_execution.entity.producer.Producer;
@@ -10,6 +11,8 @@ import data_execution.data_execution.service.producer.ProducerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/producers")
@@ -36,11 +39,16 @@ public class ProducerControllerV1 {
     @GetMapping("/{id}")
     public ResponseEntity<ProducerResponse> getProducerById(@PathVariable(name = "id") Long id) {
         var producer = producerService.getById(id)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        String.format("Producer with id=%s not found", id)
-                ));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Producer with id=%s not found", id)));
         var producerDto = producerResponseMapper.map(producer);
         return ResponseEntity.ok(producerDto);
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<ProducerResponse>> getByFilter(@RequestBody ProducerFilter filter) {
+        var producers = producerService.getByFilter(filter);
+        var producersResponse = producerResponseMapper.map(producers);
+        return ResponseEntity.ok(producersResponse);
     }
 
     @PatchMapping("/")

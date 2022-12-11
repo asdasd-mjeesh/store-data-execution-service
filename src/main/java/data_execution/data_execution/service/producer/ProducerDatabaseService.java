@@ -1,5 +1,6 @@
 package data_execution.data_execution.service.producer;
 
+import data_execution.data_execution.dto.filter.ProducerFilter;
 import data_execution.data_execution.entity.producer.Producer;
 import data_execution.data_execution.exception.EntityNotFoundException;
 import data_execution.data_execution.repository.producer.ProducerRepository;
@@ -27,8 +28,8 @@ public class ProducerDatabaseService implements ProducerService {
     }
 
     @Override
-    public List<Producer> getAll() {
-        return producerRepository.findAll();
+    public List<Producer> getByFilter(ProducerFilter filter) {
+        return producerRepository.findByFilter(filter);
     }
 
     @Override

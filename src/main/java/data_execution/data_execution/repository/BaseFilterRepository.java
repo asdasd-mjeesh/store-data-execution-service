@@ -10,12 +10,12 @@ import javax.persistence.criteria.Root;
 
 public abstract class BaseFilterRepository<E, F extends BaseFilter> {
 
-    protected Order buildOrder(F filter, CriteriaBuilder cb, Root<E> account) {
+    protected Order buildOrder(F filter, CriteriaBuilder cb, Root<E> rootEntity) {
         if (filter.getSortingOrder().equals(SortingOrder.ASCENDING)) {
-            return cb.asc(account.get(filter.getSortField()));
+            return cb.asc(rootEntity.get(filter.getSortField()));
         }
-        return cb.desc(account.get(filter.getSortField()));
+        return cb.desc(rootEntity.get(filter.getSortField()));
     }
 
-    protected abstract Predicate[] buildPredicates(F filter, CriteriaBuilder cb, Root<E> account);
+    protected abstract Predicate[] buildPredicates(F filter, CriteriaBuilder cb, Root<E> rootEntity);
 }

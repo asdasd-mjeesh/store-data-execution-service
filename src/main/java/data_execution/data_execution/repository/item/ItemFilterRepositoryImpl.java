@@ -18,22 +18,22 @@ public class ItemFilterRepositoryImpl
     private EntityManager entityManager;
 
     @Override
-    public Predicate[] buildPredicates(ItemFilter filter, CriteriaBuilder cb, Root<Item> item) {
+    public Predicate[] buildPredicates(ItemFilter filter, CriteriaBuilder cb, Root<Item> rootEntity) {
         List<Predicate> predicates = new ArrayList<>();
         if (filter.getTitle() != null) {
-            predicates.add(cb.like(item.get("title"), filter.getTitle()));
+            predicates.add(cb.like(rootEntity.get("title"), filter.getTitle()));
         }
         if (filter.getType() != null) {
-            predicates.add(cb.equal(item.get("type"), filter.getType()));
+            predicates.add(cb.equal(rootEntity.get("type"), filter.getType()));
         }
         if (filter.getProducerName() != null) {
-            predicates.add(cb.like(item.get("producer").get("name"), filter.getProducerName()));
+            predicates.add(cb.like(rootEntity.get("producer").get("name"), filter.getProducerName()));
         }
         if (filter.getMinCost() != null) {
-            predicates.add(cb.greaterThanOrEqualTo(item.get("cost"), filter.getMinCost()));
+            predicates.add(cb.greaterThanOrEqualTo(rootEntity.get("cost"), filter.getMinCost()));
         }
         if (filter.getMaxCost() != null) {
-            predicates.add(cb.lessThanOrEqualTo(item.get("cost"), filter.getMaxCost()));
+            predicates.add(cb.lessThanOrEqualTo(rootEntity.get("cost"), filter.getMaxCost()));
         }
         return predicates.toArray(Predicate[]::new);
     }
