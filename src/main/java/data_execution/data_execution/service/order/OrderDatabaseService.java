@@ -1,5 +1,6 @@
 package data_execution.data_execution.service.order;
 
+import data_execution.data_execution.dto.filter.OrderFilter;
 import data_execution.data_execution.entity.order.Order;
 import data_execution.data_execution.exception.EntityNotFoundException;
 import data_execution.data_execution.repository.order.OrderRepository;
@@ -40,8 +41,8 @@ public class OrderDatabaseService implements OrderService {
     }
 
     @Override
-    public List<Order> getAll() {
-        return orderRepository.findAll();
+    public List<Order> getByFilter(OrderFilter filter) {
+        return orderRepository.findByFilter(filter);
     }
 
     @Override
