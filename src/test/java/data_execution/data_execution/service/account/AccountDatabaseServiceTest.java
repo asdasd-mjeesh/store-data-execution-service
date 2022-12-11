@@ -57,12 +57,6 @@ class AccountDatabaseServiceTest extends IntegrationTestBase {
     }
 
     @Test
-    void getAll() {
-        accountService.getAll();
-        verify(accountRepository, times(1)).findAll();
-    }
-
-    @Test
     void update() {
         testAccount.setId(TEST_ID);
         when(accountRepository.findById(TEST_ID)).thenReturn(Optional.of(testAccount));

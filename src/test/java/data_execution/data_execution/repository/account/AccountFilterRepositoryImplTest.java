@@ -16,16 +16,21 @@ class AccountFilterRepositoryImplTest extends IntegrationTestBase {
 
     @Test
     void getByFilter() {
-//        AccountFilter filter = AccountFilter.builder()
-//                .minimalRegistrationDate(
-//                        LocalDateTime.of(2022, 12, 10, 15, 30, 2, 2))
-//                .build();
-//        filter.setOffset(0);
-//        filter.setLimit(10);
-//        filter.setSortingOrder(SortingOrder.ASCENDING);
-//        filter.setSortField("email");
+        var minRegDate = LocalDateTime.of(
+                2023, 12, 10, 15, 30, 2);
+        var maxRegDate = LocalDateTime.of(
+                2021, 12, 10, 15, 2, 2);
 
-        var account = accountRepository.getByFilter();
-        System.out.println(account);
+        AccountFilter filter = AccountFilter.builder()
+                .maximalRegistrationDate(LocalDateTime.now())
+//                .minimalRegistrationDate(minRegDate)
+                .build();
+        filter.setOffset(0);
+        filter.setLimit(10);
+        filter.setSortingOrder(SortingOrder.ASCENDING);
+        filter.setSortField("email");
+
+        var accounts = accountRepository.getByFilter(filter);
+        accounts.forEach(System.out::println);
     }
 }

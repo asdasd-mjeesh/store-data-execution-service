@@ -1,6 +1,7 @@
 package data_execution.data_execution.dto.filter;
 
 import data_execution.data_execution.entity.account.AccountStatus;
+import data_execution.data_execution.entity.account.RoleName;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -17,4 +18,5 @@ public class AccountFilter extends BaseFilter {
     private LocalDateTime minimalRegistrationDate;
     private LocalDateTime maximalRegistrationDate;
     private AccountStatus status;
+    private RoleName role;
 }

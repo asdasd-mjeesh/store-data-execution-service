@@ -7,11 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 @Repository
 public class AccountFilterRepositoryImpl implements AccountFilterRepository {
@@ -19,11 +20,15 @@ public class AccountFilterRepositoryImpl implements AccountFilterRepository {
     private EntityManager entityManager;
 
     @Override
-    public List<Account> getByFilter(AccountFilter filter) {
-        var cb = entityManager.getCriteriaBuilder();
-        var criteria = cb.createQuery(Account.class);
-        var account = criteria.from(Account.class);
+    public Order buildOrder(AccountFilter filter, CriteriaBuilder cb, Root<Account> account) {
+        if (filter.getSortingOrder().equals(SortingOrder.ASCENDING)) {
+            return cb.asc(account.get(filter.getSortField()));
+        }
+        return cb.desc(account.get(filter.getSortField()));
+    }
 
+    @Override
+    public Predicate[] buildPredicates(AccountFilter filter, CriteriaBuilder cb, Root<Account> account) {
         List<Predicate> predicates = new ArrayList<>();
         if (filter.getName() != null) {
             predicates.add(cb.like(account.get("name"), filter.getName()));
@@ -35,46 +40,36 @@ public class AccountFilterRepositoryImpl implements AccountFilterRepository {
             predicates.add(cb.like(account.get("email"), filter.getEmail()));
         }
         if (filter.getStatus() != null) {
-            predicates.add(cb.like(account.get("status"), filter.getStatus().name()));
+            predicates.add(cb.equal(account.get("status"), filter.getStatus()));
+        }
+        if (filter.getRole() != null) {
+            predicates.add(cb.equal(account.get("role").get("name"), filter.getRole()));
         }
         if (filter.getMinimalRegistrationDate() != null) {
-            predicates.add(cb.greaterThanOrEqualTo(account.get("registrationDate"),
-                    filter.getMinimalRegistrationDate().toString()));
+            predicates.add(cb.greaterThanOrEqualTo(account.get("registrationDate"), filter.getMinimalRegistrationDate()));
         }
         if (filter.getMaximalRegistrationDate() != null) {
-            predicates.add(cb.lessThanOrEqualTo(account.get("registrationDate"),
-                    filter.getMaximalRegistrationDate().toString()));
+            predicates.add(cb.lessThanOrEqualTo(account.get("registrationDate"), filter.getMaximalRegistrationDate()));
         }
+        return predicates.toArray(Predicate[]::new);
+    }
 
-        Order order;
-        if (filter.getSortingOrder().equals(SortingOrder.ASCENDING)) {
-            order = cb.asc(account.get(filter.getSortField()));
-        } else {
-            order = cb.desc(account.get(filter.getSortField()));
-        }
+    @Override
+    public List<Account> getByFilter(AccountFilter filter) {
+        var cb = entityManager.getCriteriaBuilder();
+        var criteria = cb.createQuery(Account.class);
+        var account = criteria.from(Account.class);
+
+        var predicates = this.buildPredicates(filter, cb, account);
+        var order = buildOrder(filter, cb, account);
+
         criteria.select(account)
-                .where(predicates.toArray(Predicate[]::new))
+                .where(predicates)
                 .orderBy(order);
 
         return entityManager.createQuery(criteria)
                 .setMaxResults(filter.getLimit())
                 .setFirstResult(filter.getOffset())
                 .getResultList();
-    }
-
-    @Override
-    public List<Account> getByFilter() {
-        var cb = entityManager.getCriteriaBuilder();
-        var criteria = cb.createQuery(Account.class);
-        var account = criteria.from(Account.class);
-
-        List<Predicate> predicates = new ArrayList<>();
-        predicates.add(cb.lessThan(account.get("registrationDate"), LocalDateTime.now()));
-
-        criteria.select(account)
-                .where(predicates.toArray(Predicate[]::new))
-                .orderBy(cb.asc(account.get("name")));
-
-        return entityManager.createQuery(criteria).getResultList();
     }
 }

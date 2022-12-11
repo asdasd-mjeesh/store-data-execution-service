@@ -1,5 +1,6 @@
 package data_execution.data_execution.service.account;
 
+import data_execution.data_execution.dto.filter.AccountFilter;
 import data_execution.data_execution.entity.account.Account;
 import data_execution.data_execution.exception.EntityNotFoundException;
 import data_execution.data_execution.repository.account.AccountRepository;
@@ -51,8 +52,8 @@ public class AccountDatabaseService implements AccountService {
     }
 
     @Override
-    public List<Account> getAll() {
-        return accountRepository.findAll();
+    public List<Account> getByFilter(AccountFilter filter) {
+        return accountRepository.getByFilter(filter);
     }
 
     @Override

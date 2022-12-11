@@ -1,5 +1,6 @@
 package data_execution.data_execution.rest_controller;
 
+import data_execution.data_execution.dto.filter.AccountFilter;
 import data_execution.data_execution.dto.request.account.AccountRequest;
 import data_execution.data_execution.dto.response.account.AccountResponse;
 import data_execution.data_execution.entity.account.Account;
@@ -77,6 +78,14 @@ public class AccountControllerV1 {
         account = accountService.create(account);
         var accountResponse = accountResponseMapper.map(account);
         return ResponseEntity.ok(accountResponse);
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<AccountResponse>> getByFilter(@RequestBody AccountFilter filter) {
+        System.out.println(filter);
+        var accounts = accountService.getByFilter(filter);
+        var accountsResponse = accountResponseMapper.map(accounts);
+        return ResponseEntity.ok(accountsResponse);
     }
 
     @GetMapping("/{id}")

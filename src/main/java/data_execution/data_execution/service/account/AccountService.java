@@ -1,5 +1,6 @@
 package data_execution.data_execution.service.account;
 
+import data_execution.data_execution.dto.filter.AccountFilter;
 import data_execution.data_execution.entity.account.Account;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface AccountService {
     Optional<Account> getById(Long id);
     Account getAccountByIdWithResultChecking(Long id);
     Account getByEmail(String email);
-    List<Account> getAll();
+    List<Account> getByFilter(AccountFilter filter);
     boolean updateWithConfirmation(Account account);
     Account update(Account account);
     boolean deleteById(Long id);
