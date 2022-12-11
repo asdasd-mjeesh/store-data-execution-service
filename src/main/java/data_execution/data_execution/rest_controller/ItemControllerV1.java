@@ -1,5 +1,6 @@
 package data_execution.data_execution.rest_controller;
 
+import data_execution.data_execution.dto.filter.ItemFilter;
 import data_execution.data_execution.dto.request.item.ItemRequest;
 import data_execution.data_execution.dto.response.item.ItemResponse;
 import data_execution.data_execution.service.item.ItemService;
@@ -8,6 +9,8 @@ import data_execution.data_execution.service.mapper.response.item.ItemResponseMa
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/items")
@@ -37,6 +40,14 @@ public class ItemControllerV1 {
         var item = itemService.getByIdWithResultChecking(id);
         var itemResponse = itemResponseMapper.map(item);
         return ResponseEntity.ok(itemResponse);
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<ItemResponse>> getByFilter(@RequestBody ItemFilter filter) {
+        System.out.println(filter);
+        var items = itemService.getByFilter(filter);
+        var itemsResponse = itemResponseMapper.map(items);
+        return ResponseEntity.ok(itemsResponse);
     }
 
     @PatchMapping("/")

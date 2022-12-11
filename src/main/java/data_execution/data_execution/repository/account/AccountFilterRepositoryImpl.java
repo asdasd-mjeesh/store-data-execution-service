@@ -55,7 +55,7 @@ public class AccountFilterRepositoryImpl implements AccountFilterRepository {
     }
 
     @Override
-    public List<Account> getByFilter(AccountFilter filter) {
+    public List<Account> findByFilter(AccountFilter filter) {
         var cb = entityManager.getCriteriaBuilder();
         var criteria = cb.createQuery(Account.class);
         var account = criteria.from(Account.class);

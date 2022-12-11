@@ -53,7 +53,7 @@ public class AccountDatabaseService implements AccountService {
 
     @Override
     public List<Account> getByFilter(AccountFilter filter) {
-        return accountRepository.getByFilter(filter);
+        return accountRepository.findByFilter(filter);
     }
 
     @Override

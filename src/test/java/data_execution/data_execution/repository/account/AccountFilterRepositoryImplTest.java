@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class AccountFilterRepositoryImplTest extends IntegrationTestBase {
     @Autowired
     private AccountRepository accountRepository;
@@ -30,7 +28,7 @@ class AccountFilterRepositoryImplTest extends IntegrationTestBase {
         filter.setSortingOrder(SortingOrder.ASCENDING);
         filter.setSortField("email");
 
-        var accounts = accountRepository.getByFilter(filter);
+        var accounts = accountRepository.findByFilter(filter);
         accounts.forEach(System.out::println);
     }
 }

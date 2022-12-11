@@ -1,5 +1,6 @@
 package data_execution.data_execution.service.item;
 
+import data_execution.data_execution.dto.filter.ItemFilter;
 import data_execution.data_execution.entity.item.Item;
 import data_execution.data_execution.exception.EntityNotFoundException;
 import data_execution.data_execution.repository.item.ItemRepository;
@@ -40,8 +41,8 @@ public class ItemDatabaseService implements ItemService {
     }
 
     @Override
-    public List<Item> getAll() {
-        return itemRepository.findAll();
+    public List<Item> getByFilter(ItemFilter filter) {
+        return itemRepository.findByFilter(filter);
     }
 
     @Override

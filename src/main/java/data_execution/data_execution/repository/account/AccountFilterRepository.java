@@ -12,5 +12,5 @@ import java.util.List;
 public interface AccountFilterRepository {
     Order buildOrder(AccountFilter filter, CriteriaBuilder cb, Root<Account> account);
     Predicate[] buildPredicates(AccountFilter filter, CriteriaBuilder cb, Root<Account> account);
-    List<Account> getByFilter(AccountFilter filter);
+    List<Account> findByFilter(AccountFilter filter);
 }
