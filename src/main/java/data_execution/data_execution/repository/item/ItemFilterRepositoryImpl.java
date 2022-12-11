@@ -1,29 +1,21 @@
 package data_execution.data_execution.repository.item;
 
 import data_execution.data_execution.dto.filter.ItemFilter;
-import data_execution.data_execution.dto.filter.SortingOrder;
 import data_execution.data_execution.entity.item.Item;
+import data_execution.data_execution.repository.BaseFilterRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemFilterRepositoryImpl implements ItemFilterRepository {
+public class ItemFilterRepositoryImpl
+        extends BaseFilterRepository<Item, ItemFilter> implements ItemFilterRepository {
     @PersistenceContext
     private EntityManager entityManager;
-
-    @Override
-    public Order buildOrder(ItemFilter filter, CriteriaBuilder cb, Root<Item> account) {
-        if (filter.getSortingOrder().equals(SortingOrder.ASCENDING)) {
-            return cb.asc(account.get(filter.getSortField()));
-        }
-        return cb.desc(account.get(filter.getSortField()));
-    }
 
     @Override
     public Predicate[] buildPredicates(ItemFilter filter, CriteriaBuilder cb, Root<Item> item) {

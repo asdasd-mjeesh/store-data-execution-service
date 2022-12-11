@@ -1,13 +1,11 @@
 package data_execution.data_execution.dto.filter;
 
 import data_execution.data_execution.entity.item.ItemType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @Data
 @AllArgsConstructor

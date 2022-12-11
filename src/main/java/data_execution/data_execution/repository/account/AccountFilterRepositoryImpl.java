@@ -1,8 +1,8 @@
 package data_execution.data_execution.repository.account;
 
 import data_execution.data_execution.dto.filter.AccountFilter;
-import data_execution.data_execution.dto.filter.SortingOrder;
 import data_execution.data_execution.entity.account.Account;
+import data_execution.data_execution.repository.BaseFilterRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -10,22 +10,14 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 @Repository
-public class AccountFilterRepositoryImpl implements AccountFilterRepository {
+public class AccountFilterRepositoryImpl
+        extends BaseFilterRepository<Account, AccountFilter> implements AccountFilterRepository {
     @PersistenceContext
     private EntityManager entityManager;
-
-    @Override
-    public Order buildOrder(AccountFilter filter, CriteriaBuilder cb, Root<Account> account) {
-        if (filter.getSortingOrder().equals(SortingOrder.ASCENDING)) {
-            return cb.asc(account.get(filter.getSortField()));
-        }
-        return cb.desc(account.get(filter.getSortField()));
-    }
 
     @Override
     public Predicate[] buildPredicates(AccountFilter filter, CriteriaBuilder cb, Root<Account> account) {

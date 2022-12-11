@@ -43,12 +43,6 @@ class ItemDatabaseServiceTest extends IntegrationTestBase {
     }
 
     @Test
-    void getAll() {
-//        itemService.getAll();
-//        verify(itemRepository, times(1)).findAll();
-    }
-
-    @Test
     void update() {
         testItem.setId(TEST_ID);
         when(itemRepository.findById(TEST_ID)).thenReturn(Optional.of(testItem));
