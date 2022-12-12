@@ -110,13 +110,11 @@ public class AccountControllerV1 {
     }
 
     @PatchMapping("/")
-    public ResponseEntity<String> update(@RequestBody AccountRequest accountRequest) {
+    public ResponseEntity<AccountResponse> update(@RequestBody AccountRequest accountRequest) {
         var account = accountRequestMapper.map(accountRequest);
-        boolean isUpdated = accountService.updateWithConfirmation(account);
-        if (isUpdated) {
-            return ResponseEntity.ok("Updated successfully");
-        }
-        return new ResponseEntity<>("Update was failed", HttpStatus.CONFLICT);
+        account = accountService.update(account);
+        var accountResponse = accountResponseMapper.map(account);
+        return ResponseEntity.ok(accountResponse);
     }
 
     @DeleteMapping("/{id}")
