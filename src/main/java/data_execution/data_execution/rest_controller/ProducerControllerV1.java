@@ -33,7 +33,7 @@ public class ProducerControllerV1 {
         var producer = producerRequestMapper.map(producerRequest);
         producer = producerService.create(producer);
         var producerResponse = producerResponseMapper.map(producer);
-        return ResponseEntity.ok(producerResponse);
+        return new ResponseEntity<>(producerResponse, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -44,7 +44,7 @@ public class ProducerControllerV1 {
         return ResponseEntity.ok(producerDto);
     }
 
-    @GetMapping("/filter")
+    @PutMapping("/filter")
     public ResponseEntity<List<ProducerResponse>> getByFilter(@RequestBody ProducerFilter filter) {
         var producers = producerService.getByFilter(filter);
         var producersResponse = producerResponseMapper.map(producers);
