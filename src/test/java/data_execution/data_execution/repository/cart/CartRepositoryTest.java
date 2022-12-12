@@ -11,9 +11,9 @@ class CartRepositoryTest extends IntegrationTestBase {
     @Autowired
     private CartRepository cartRepository;
 
-    @Test
-    void getByAccountId() {
-        var cart = cartRepository.getByAccountId(3L);
-        System.out.println(cart);
-    }
+//    @Test
+//    void getByAccountId() {
+//        var cart = cartRepository.getByAccountId(3L);
+//        System.out.println(cart);
+//    }
 }

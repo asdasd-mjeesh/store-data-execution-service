@@ -10,10 +10,10 @@ class CartDatabaseServiceTest extends IntegrationTestBase {
     @Autowired
     private CartDatabaseService cartDatabaseService;
 
-    @Test
-    void getCartByAccountIdWithResultChecking() {
-        var cart = cartDatabaseService.getCartByAccountIdWithResultChecking(3L);
-        System.out.println(cart);
-        cart.getCartItems().forEach(System.out::println);
-    }
+//    @Test
+//    void getCartByAccountIdWithResultChecking() {
+//        var cart = cartDatabaseService.getCartByAccountIdWithResultChecking(3L);
+//        System.out.println(cart);
+//        cart.getCartItems().forEach(System.out::println);
+//    }
 }

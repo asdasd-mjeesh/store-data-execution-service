@@ -50,7 +50,7 @@ public class AccountControllerV1 {
         return new ResponseEntity<>("Confirmation failed", HttpStatus.CONFLICT);
     }
 
-    @PostMapping("/addPermissions")
+    @PatchMapping("/addPermissions")
     public ResponseEntity<AccountResponse> addPermissions(@RequestParam(name = "accountId") Long accountId,
                                                           @RequestBody List<PermissionEnum> permissionEnums) {
         Account changedAccount = accountRolePermissionService.addPermissionsToAccount(accountId, permissionEnums);
@@ -58,11 +58,19 @@ public class AccountControllerV1 {
         return ResponseEntity.ok(accountResponse);
     }
 
-    @PostMapping("/deletePermissions")
+    @DeleteMapping("/deletePermissions")
     public ResponseEntity<AccountResponse> deletePermissions(@RequestParam(name = "accountId") Long accountId,
                                                              @RequestBody List<PermissionEnum> permissionEnums) {
         var changedAccount = accountRolePermissionService.deletePermissions(accountId, permissionEnums);
         var accountResponse = accountResponseMapper.map(changedAccount);
+        return ResponseEntity.ok(accountResponse);
+    }
+
+    @PatchMapping("/changeRole")
+    public ResponseEntity<AccountResponse> changeRole(@RequestParam(name = "accountId") Long accountId,
+                                                      @RequestParam(name = "roleName") RoleName roleName) {
+        Account changedAccount = accountRolePermissionService.changeRole(accountId, roleName);
+        AccountResponse accountResponse = accountResponseMapper.map(changedAccount);
         return ResponseEntity.ok(accountResponse);
     }
 
@@ -77,15 +85,7 @@ public class AccountControllerV1 {
         var account = accountRequestMapper.map(accountRequest);
         account = accountService.create(account);
         var accountResponse = accountResponseMapper.map(account);
-        return ResponseEntity.ok(accountResponse);
-    }
-
-    @GetMapping("/filter")
-    public ResponseEntity<List<AccountResponse>> getByFilter(@RequestBody AccountFilter filter) {
-        System.out.println(filter);
-        var accounts = accountService.getByFilter(filter);
-        var accountsResponse = accountResponseMapper.map(accounts);
-        return ResponseEntity.ok(accountsResponse);
+        return new ResponseEntity<>(accountResponse, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -93,6 +93,13 @@ public class AccountControllerV1 {
         var account = accountService.getAccountByIdWithResultChecking(id);
         var accountResponse = accountResponseMapper.map(account);
         return ResponseEntity.ok(accountResponse);
+    }
+
+    @PutMapping("/filter")
+    public ResponseEntity<List<AccountResponse>> getByFilter(@RequestBody AccountFilter filter) {
+        var accounts = accountService.getByFilter(filter);
+        var accountsResponse = accountResponseMapper.map(accounts);
+        return ResponseEntity.ok(accountsResponse);
     }
 
     @GetMapping("/")
@@ -119,13 +126,5 @@ public class AccountControllerV1 {
             return ResponseEntity.ok("Deleted successfully");
         }
         return new ResponseEntity<>("Delete was failed", HttpStatus.CONFLICT);
-    }
-
-    @PostMapping("/changeRole")
-    public ResponseEntity<AccountResponse> changeRole(@RequestParam(name = "accountId") Long accountId,
-                                                      @RequestParam(name = "roleName") RoleName roleName) {
-        Account changedAccount = accountRolePermissionService.changeRole(accountId, roleName);
-        AccountResponse accountResponse = accountResponseMapper.map(changedAccount);
-        return ResponseEntity.ok(accountResponse);
     }
 }

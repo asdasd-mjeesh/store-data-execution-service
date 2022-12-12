@@ -1,10 +1,6 @@
 package data_execution.data_execution.repository.account;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import data_execution.data_execution.TestingEntitiesFactory;
 import data_execution.data_execution.entity.account.Account;
-import data_execution.data_execution.repository.order.OrderItemRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,36 +23,36 @@ class AccountRepositoryTest {
 
     @Autowired
     private AccountRepository accountRepository;
-    @Autowired
-    private TestingEntitiesFactory testingEntitiesFactory;
+//    @Autowired
+//    private TestingEntitiesFactory testingEntitiesFactory;
+//
+//    @BeforeEach
+//    void setUp() throws JsonProcessingException {
+//        testAccount = testingEntitiesFactory.getTestAccount();
+//    }
 
-    @BeforeEach
-    void setUp() throws JsonProcessingException {
-        testAccount = testingEntitiesFactory.getTestAccount();
-    }
-
-    @Test
-    void saveTest() {
-        var saveResult = accountRepository.save(testAccount);
-        System.out.println(saveResult);
-    }
-
-    @Test
-    void findByIdTest() {
-        var account = accountRepository.findById(TEST_ID);
-        assertTrue(account.isPresent());
-    }
-
-    @Test
-    void findByEmailTest() {
-        var accountByEmail = accountRepository.findByEmail(accountValue);
-        assertTrue(accountByEmail.isPresent());
-    }
-
-    @Test
-    void deleteByIdTest() {
-        accountRepository.deleteById(TEST_ID);
-        var account = accountRepository.findById(TEST_ID);
-        assertTrue(account.isEmpty());
-    }
+//    @Test
+//    void saveTest() {
+//        var saveResult = accountRepository.save(testAccount);
+//        System.out.println(saveResult);
+//    }
+//
+//    @Test
+//    void findByIdTest() {
+//        var account = accountRepository.findById(TEST_ID);
+//        assertTrue(account.isPresent());
+//    }
+//
+//    @Test
+//    void findByEmailTest() {
+//        var accountByEmail = accountRepository.findByEmail(accountValue);
+//        assertTrue(accountByEmail.isPresent());
+//    }
+//
+//    @Test
+//    void deleteByIdTest() {
+//        accountRepository.deleteById(TEST_ID);
+//        var account = accountRepository.findById(TEST_ID);
+//        assertTrue(account.isEmpty());
+//    }
 }
