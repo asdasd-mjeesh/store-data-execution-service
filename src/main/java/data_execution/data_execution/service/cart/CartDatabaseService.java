@@ -19,12 +19,12 @@ public class CartDatabaseService implements CartService {
 
     @Override
     public Optional<Cart> getByAccountId(Long accountId) {
-        return cartRepository.getByAccountId(accountId);
+        return cartRepository.findByAccountId(accountId);
     }
 
     @Override
     public Cart getCartByAccountIdWithResultChecking(Long accountId) {
-        var cart = cartRepository.findById(accountId);
+        var cart = cartRepository.findByAccountId(accountId);
         if (cart.isEmpty()) {
             String errorMsg = String.format("Cart with account_id=%s not found", accountId);
             log.error(errorMsg);

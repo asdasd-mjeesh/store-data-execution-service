@@ -32,7 +32,7 @@ public class ItemControllerV1 {
         var item = itemRequestMapper.map(itemRequest);
         item = itemService.create(item);
         var savedItemResponse = itemResponseMapper.map(item);
-        return ResponseEntity.ok(savedItemResponse);
+        return new ResponseEntity<>(savedItemResponse, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -42,7 +42,7 @@ public class ItemControllerV1 {
         return ResponseEntity.ok(itemResponse);
     }
 
-    @GetMapping("/filter")
+    @PutMapping("/filter")
     public ResponseEntity<List<ItemResponse>> getByFilter(@RequestBody ItemFilter filter) {
         System.out.println(filter);
         var items = itemService.getByFilter(filter);

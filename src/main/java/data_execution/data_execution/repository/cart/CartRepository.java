@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
     @Query("SELECT c FROM Cart c JOIN Account a ON c.id = a.cart.id WHERE a.id = :accountId")
-    Optional<Cart> getByAccountId(@Param("accountId") Long accountId);
+    Optional<Cart> findByAccountId(@Param("accountId") Long accountId);
 }
