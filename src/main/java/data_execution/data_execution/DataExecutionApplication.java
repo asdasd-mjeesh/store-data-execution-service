@@ -13,20 +13,4 @@ public class DataExecutionApplication {
     public static void main(String[] args) {
         SpringApplication.run(DataExecutionApplication.class, args);
     }
-
-    @Bean
-    CommandLineRunner synchronizePermissions(
-            @Qualifier("contextPermissionEntityFactory") ContextInitService contextInitService) {
-        return args -> {
-            contextInitService.init();
-        };
-    }
-
-    @Bean
-    CommandLineRunner synchronizeSizes(
-            @Qualifier("sizeEntityFactory") ContextInitService contextInitService) {
-        return args -> {
-            contextInitService.init();
-        };
-    }
 }
