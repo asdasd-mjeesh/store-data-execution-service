@@ -7,6 +7,7 @@ import data_execution.data_execution.service.mapper.response.order.OrderResponse
 import data_execution.data_execution.service.order.OrderActionService;
 import data_execution.data_execution.service.order.OrderCreatorService;
 import data_execution.data_execution.service.order.OrderService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,13 @@ public class OrderControllerV1 {
         this.orderActionService = orderActionService;
     }
 
+    @PostMapping("/")
+    public ResponseEntity<OrderResponse> createOrder(@RequestParam(name = "accountId") Long accountId) {
+        var order = orderCreatorService.createOrder(accountId);
+        var orderResponse = orderResponseMapper.map(order);
+        return new ResponseEntity<>(orderResponse, HttpStatus.CREATED);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> getById(@PathVariable(name = "id") Long id) {
         var order = orderService.getByIdWithResultChecking(id);
@@ -37,24 +45,17 @@ public class OrderControllerV1 {
         return ResponseEntity.ok(orderResponse);
     }
 
-    @GetMapping("/filter")
+    @PutMapping("/filter")
     public ResponseEntity<List<OrderResponse>> getByFilter(@RequestBody OrderFilter filter) {
         var orders = orderService.getByFilter(filter);
         var ordersResponse = orderResponseMapper.map(orders);
         return ResponseEntity.ok(ordersResponse);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<OrderResponse> buyCartItems(@RequestParam(name = "accountId") Long accountId) {
-        var order = orderCreatorService.createOrder(accountId);
-        var orderResponse = orderResponseMapper.map(order);
-        return ResponseEntity.ok(orderResponse);
-    }
-
     @PatchMapping("/changeStatus")
     public ResponseEntity<OrderResponse> changeStatus(@RequestParam(name = "orderId") Long orderId,
-                                                      @RequestParam(name = "orderStatus") OrderStatus orderStatus) {
-        var order = orderActionService.changeStatus(orderId, orderStatus);
+                                                      @RequestParam(name = "status") OrderStatus status) {
+        var order = orderActionService.changeStatus(orderId, status);
         var orderResponse = orderResponseMapper.map(order);
         return ResponseEntity.ok(orderResponse);
     }
