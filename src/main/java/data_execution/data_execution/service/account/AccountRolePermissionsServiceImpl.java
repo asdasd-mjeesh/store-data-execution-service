@@ -4,24 +4,28 @@ import data_execution.data_execution.entity.account.*;
 import data_execution.data_execution.exception.EntityNotFoundException;
 import data_execution.data_execution.service.factory.roles.RolesFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
+@Slf4j
 public class AccountRolePermissionsServiceImpl implements AccountRolePermissionService {
-    private static final String ENTITY_NOT_FOUND_ERROR_MSG_TEMPLATE = "%s with %s=%s not found";
     private final AccountService accountService;
     private final PermissionService permissionService;
     private final RoleService roleService;
     private final RolesFactory rolesFactory;
 
+    @Value("${application.exception.entity-not-found.message.template}")
+    private String entityNotFoundErrorMsgTemplate;
+
     public AccountRolePermissionsServiceImpl(AccountService accountService,
                                              PermissionService permissionService,
-                                             RoleService roleService, RolesFactory rolesFactory) {
+                                             RoleService roleService,
+                                             RolesFactory rolesFactory) {
         this.accountService = accountService;
         this.permissionService = permissionService;
         this.roleService = roleService;
@@ -49,7 +53,7 @@ public class AccountRolePermissionsServiceImpl implements AccountRolePermissionS
         return permissionEnums.stream()
                 .map(permissionEnum -> permissionService.getByPermissionName(permissionEnum)
                         .orElseThrow(() -> new EntityNotFoundException(String.format(
-                                ENTITY_NOT_FOUND_ERROR_MSG_TEMPLATE, Permission.class, "name", permissionEnum))))
+                                entityNotFoundErrorMsgTemplate, Permission.class, "name", permissionEnum))))
                 .collect(Collectors.toSet());
     }
 

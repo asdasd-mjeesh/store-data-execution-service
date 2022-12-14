@@ -23,9 +23,7 @@ public class Cart extends BaseEntity {
     private BigDecimal currentTotalPrice = BigDecimal.ZERO;
 
     public void calculateCurrentTotalPrice() {
-        cartItems.forEach(cartItem ->
-            currentTotalPrice = currentTotalPrice.add(
-                    cartItem.getItem().getCost()
-                            .multiply(BigDecimal.valueOf(cartItem.getCount()))));
+//        this.currentTotalPrice = cartItems.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+        this.currentTotalPrice = BigDecimal.TEN;
     }
 }
