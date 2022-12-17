@@ -33,7 +33,7 @@ public class ItemDatabaseService implements ItemService {
     public Item getByIdWithResultChecking(Long id) {
         var item = itemRepository.findById(id);
         if (item.isEmpty()) {
-            String errorMsg = String.format("Item with id=%s now found", id);
+            String errorMsg = String.format("Item with id=%s not found", id);
             log.error(errorMsg);
             throw new EntityNotFoundException(errorMsg);
         }

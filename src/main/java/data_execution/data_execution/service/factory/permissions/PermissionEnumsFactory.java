@@ -18,19 +18,19 @@ public class PermissionEnumsFactory implements PermissionFactory<PermissionEnum>
                 PermissionEnum.ORDER_SAVE, PermissionEnum.ORDER_READ,
                 PermissionEnum.CART_READ, PermissionEnum.CART_EDIT,
                 PermissionEnum.ITEM_READ,
-                PermissionEnum.PRODUCER_READ
-        ));
+                PermissionEnum.PRODUCER_READ));
 
         EMPLOYEE_DEFAULT_PERMISSION_ENUMS = new HashSet<>(USER_DEFAULT_PERMISSION_ENUMS);
-        EMPLOYEE_DEFAULT_PERMISSION_ENUMS.add(PermissionEnum.ORDER_UPDATE);
+        EMPLOYEE_DEFAULT_PERMISSION_ENUMS.addAll(Set.of(
+                PermissionEnum.ORDER_UPDATE,
+                PermissionEnum.ACCOUNT_ACCESS_CHANGE));
 
         ADMIN_DEFAULT_PERMISSION_ENUMS = new HashSet<>(EMPLOYEE_DEFAULT_PERMISSION_ENUMS);
         ADMIN_DEFAULT_PERMISSION_ENUMS.addAll(Set.of(
                 PermissionEnum.ACCOUNT_SAVE,
                 PermissionEnum.ORDER_DELETE,
                 PermissionEnum.ITEM_SAVE,  PermissionEnum.ITEM_DELETE,
-                PermissionEnum.PRODUCER_SAVE, PermissionEnum.PRODUCER_DELETE
-        ));
+                PermissionEnum.PRODUCER_SAVE, PermissionEnum.PRODUCER_DELETE));
     }
 
     private PermissionEnumsFactory() {  }

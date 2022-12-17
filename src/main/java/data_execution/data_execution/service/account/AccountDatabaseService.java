@@ -43,7 +43,7 @@ public class AccountDatabaseService implements AccountService {
     @Override
     public Account getByEmail(String email) {
         Optional<Account> account = accountRepository.findByEmail(email);
-        if (account.isEmpty()) {
+         if (account.isEmpty()) {
             String errorMsg = String.format("Account with email=%s not found", email);
             log.error(errorMsg);
             throw new EntityNotFoundException(errorMsg);
