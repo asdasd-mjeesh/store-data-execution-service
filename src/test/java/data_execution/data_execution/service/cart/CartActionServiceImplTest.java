@@ -1,13 +1,13 @@
 package data_execution.data_execution.service.cart;
 
 import data_execution.data_execution.IntegrationTestBase;
-import data_execution.data_execution.dto.request.cart.BuyItemProperties;
-import data_execution.data_execution.entity.cart.Cart;
-import data_execution.data_execution.entity.cart.CartItem;
-import data_execution.data_execution.entity.item.Item;
-import data_execution.data_execution.entity.item.ItemType;
-import data_execution.data_execution.entity.item.SizeEnum;
-import data_execution.data_execution.entity.producer.Producer;
+import data_execution.data_execution.dto.request.incoming.cart.BuyItemProperties;
+import data_execution.data_execution.persistance.entity.cart.Cart;
+import data_execution.data_execution.persistance.entity.cart.CartItem;
+import data_execution.data_execution.persistance.entity.item.Item;
+import data_execution.data_execution.persistance.entity.item.ItemType;
+import data_execution.data_execution.persistance.entity.item.SizeEnum;
+import data_execution.data_execution.persistance.entity.producer.Producer;
 import data_execution.data_execution.service.factory.size.SizeEntityFactory;
 import data_execution.data_execution.service.item.ItemService;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,8 +1,8 @@
 package data_execution.data_execution.service.factory.permissions;
 
-import data_execution.data_execution.entity.account.Permission;
-import data_execution.data_execution.entity.account.PermissionEnum;
-import data_execution.data_execution.repository.account.PermissionRepository;
+import data_execution.data_execution.persistance.entity.account.Permission;
+import data_execution.data_execution.persistance.entity.account.PermissionEnum;
+import data_execution.data_execution.persistance.repository.account.PermissionRepository;
 import data_execution.data_execution.service.factory.ContextInitService;
 import data_execution.data_execution.service.factory.EntityContextSynchronizer;
 import org.springframework.stereotype.Service;

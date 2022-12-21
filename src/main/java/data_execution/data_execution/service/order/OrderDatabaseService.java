@@ -1,9 +1,9 @@
 package data_execution.data_execution.service.order;
 
 import data_execution.data_execution.dto.filter.OrderFilter;
-import data_execution.data_execution.entity.order.Order;
+import data_execution.data_execution.persistance.entity.order.Order;
 import data_execution.data_execution.exception.EntityNotFoundException;
-import data_execution.data_execution.repository.order.OrderRepository;
+import data_execution.data_execution.persistance.repository.order.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

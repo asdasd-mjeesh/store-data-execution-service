@@ -1,9 +1,9 @@
 package data_execution.data_execution.service.item;
 
 import data_execution.data_execution.dto.filter.ItemFilter;
-import data_execution.data_execution.entity.item.Item;
+import data_execution.data_execution.persistance.entity.item.Item;
 import data_execution.data_execution.exception.EntityNotFoundException;
-import data_execution.data_execution.repository.item.ItemRepository;
+import data_execution.data_execution.persistance.repository.item.ItemRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package data_execution.data_execution.service.item;
 
-import data_execution.data_execution.entity.item.Size;
-import data_execution.data_execution.repository.item.SizeRepository;
+import data_execution.data_execution.persistance.entity.item.Size;
+import data_execution.data_execution.persistance.repository.item.SizeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;

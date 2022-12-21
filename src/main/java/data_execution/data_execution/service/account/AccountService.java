@@ -1,7 +1,7 @@
 package data_execution.data_execution.service.account;
 
 import data_execution.data_execution.dto.filter.AccountFilter;
-import data_execution.data_execution.entity.account.Account;
+import data_execution.data_execution.persistance.entity.account.Account;
 
 import java.util.List;
 import java.util.Optional;

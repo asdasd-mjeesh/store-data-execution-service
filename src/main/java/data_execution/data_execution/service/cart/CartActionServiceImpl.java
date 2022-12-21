@@ -1,10 +1,10 @@
 package data_execution.data_execution.service.cart;
 
-import data_execution.data_execution.dto.request.cart.BuyItemProperties;
-import data_execution.data_execution.entity.cart.Cart;
-import data_execution.data_execution.entity.cart.CartItem;
-import data_execution.data_execution.entity.item.Item;
-import data_execution.data_execution.entity.item.Size;
+import data_execution.data_execution.dto.request.incoming.cart.BuyItemProperties;
+import data_execution.data_execution.persistance.entity.cart.Cart;
+import data_execution.data_execution.persistance.entity.cart.CartItem;
+import data_execution.data_execution.persistance.entity.item.Item;
+import data_execution.data_execution.persistance.entity.item.Size;
 import data_execution.data_execution.exception.EntityNotFoundException;
 import data_execution.data_execution.service.factory.size.SizeFactory;
 import data_execution.data_execution.service.item.ItemService;

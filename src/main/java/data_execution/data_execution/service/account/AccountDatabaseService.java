@@ -1,9 +1,11 @@
 package data_execution.data_execution.service.account;
 
 import data_execution.data_execution.dto.filter.AccountFilter;
-import data_execution.data_execution.entity.account.Account;
+import data_execution.data_execution.persistance.entity.account.Account;
 import data_execution.data_execution.exception.EntityNotFoundException;
-import data_execution.data_execution.repository.account.AccountRepository;
+import data_execution.data_execution.persistance.repository.account.AccountRepository;
+import data_execution.data_execution.service.account.confirmation.AccountConfirmationServiceCommunication;
+import data_execution.data_execution.service.mapper.request.outgoing.AccountConfirmationOutgoingRequestMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +16,23 @@ import java.util.Optional;
 @Slf4j
 public class AccountDatabaseService implements AccountService {
     private final AccountRepository accountRepository;
+    private final AccountConfirmationServiceCommunication confirmationServiceCommunication;
+    private final AccountConfirmationOutgoingRequestMapper accountConfirmationOutgoingRequestMapper;
 
-    public AccountDatabaseService(AccountRepository accountRepository) {
+    public AccountDatabaseService(AccountRepository accountRepository,
+                                  AccountConfirmationServiceCommunication confirmationServiceCommunication,
+                                  AccountConfirmationOutgoingRequestMapper accountConfirmationOutgoingRequestMapper) {
         this.accountRepository = accountRepository;
+        this.confirmationServiceCommunication = confirmationServiceCommunication;
+        this.accountConfirmationOutgoingRequestMapper = accountConfirmationOutgoingRequestMapper;
     }
 
     @Override
     public Account create(Account account) {
-        return accountRepository.save(account);
+        var savedAccount = accountRepository.save(account);
+        var accountConfirmRequest = accountConfirmationOutgoingRequestMapper.map(savedAccount);
+        confirmationServiceCommunication.sendConfirmation(accountConfirmRequest);
+        return savedAccount;
     }
 
     @Override

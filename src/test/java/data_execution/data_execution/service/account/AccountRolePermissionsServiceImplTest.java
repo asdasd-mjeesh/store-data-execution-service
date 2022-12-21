@@ -1,8 +1,11 @@
 package data_execution.data_execution.service.account;
 
 import data_execution.data_execution.IntegrationTestBase;
-import data_execution.data_execution.entity.account.*;
-import data_execution.data_execution.entity.cart.Cart;
+import data_execution.data_execution.persistance.entity.account.Account;
+import data_execution.data_execution.persistance.entity.account.AccountStatus;
+import data_execution.data_execution.persistance.entity.account.PermissionEnum;
+import data_execution.data_execution.persistance.entity.account.RoleName;
+import data_execution.data_execution.persistance.entity.cart.Cart;
 import data_execution.data_execution.service.factory.permissions.ContextPermissionEntityFactory;
 import data_execution.data_execution.service.factory.roles.RolesFactory;
 import org.junit.jupiter.api.BeforeEach;

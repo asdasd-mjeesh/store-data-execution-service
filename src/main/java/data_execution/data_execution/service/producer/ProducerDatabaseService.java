@@ -1,9 +1,9 @@
 package data_execution.data_execution.service.producer;
 
 import data_execution.data_execution.dto.filter.ProducerFilter;
-import data_execution.data_execution.entity.producer.Producer;
+import data_execution.data_execution.persistance.entity.producer.Producer;
 import data_execution.data_execution.exception.EntityNotFoundException;
-import data_execution.data_execution.repository.producer.ProducerRepository;
+import data_execution.data_execution.persistance.repository.producer.ProducerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

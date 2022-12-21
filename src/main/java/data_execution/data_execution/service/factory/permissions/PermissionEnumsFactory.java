@@ -1,6 +1,6 @@
 package data_execution.data_execution.service.factory.permissions;
 
-import data_execution.data_execution.entity.account.PermissionEnum;
+import data_execution.data_execution.persistance.entity.account.PermissionEnum;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;

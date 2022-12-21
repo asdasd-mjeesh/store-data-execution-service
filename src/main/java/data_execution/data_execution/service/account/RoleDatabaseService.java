@@ -1,7 +1,7 @@
 package data_execution.data_execution.service.account;
 
-import data_execution.data_execution.entity.account.Role;
-import data_execution.data_execution.repository.account.RoleRepository;
+import data_execution.data_execution.persistance.entity.account.Role;
+import data_execution.data_execution.persistance.repository.account.RoleRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

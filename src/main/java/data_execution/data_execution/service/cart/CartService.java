@@ -1,6 +1,6 @@
 package data_execution.data_execution.service.cart;
 
-import data_execution.data_execution.entity.cart.Cart;
+import data_execution.data_execution.persistance.entity.cart.Cart;
 
 import java.util.Optional;
 

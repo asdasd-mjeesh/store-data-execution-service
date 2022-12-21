@@ -1,7 +1,7 @@
 package data_execution.data_execution.service.factory.roles;
 
-import data_execution.data_execution.entity.account.Role;
-import data_execution.data_execution.entity.account.RoleName;
+import data_execution.data_execution.persistance.entity.account.Role;
+import data_execution.data_execution.persistance.entity.account.RoleName;
 import data_execution.data_execution.service.factory.permissions.ContextPermissionEntityFactory;
 import org.springframework.stereotype.Service;
 

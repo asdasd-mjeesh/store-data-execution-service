@@ -1,8 +1,8 @@
 package data_execution.data_execution.service.factory.size;
 
-import data_execution.data_execution.entity.item.Size;
-import data_execution.data_execution.entity.item.SizeEnum;
-import data_execution.data_execution.entity.item.SizeType;
+import data_execution.data_execution.persistance.entity.item.Size;
+import data_execution.data_execution.persistance.entity.item.SizeEnum;
+import data_execution.data_execution.persistance.entity.item.SizeType;
 import data_execution.data_execution.service.factory.ContextInitService;
 import data_execution.data_execution.service.factory.EntityContextSynchronizer;
 import data_execution.data_execution.service.item.SizeService;

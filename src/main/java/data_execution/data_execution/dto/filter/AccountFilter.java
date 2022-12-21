@@ -1,7 +1,7 @@
 package data_execution.data_execution.dto.filter;
 
-import data_execution.data_execution.entity.account.AccountStatus;
-import data_execution.data_execution.entity.account.RoleName;
+import data_execution.data_execution.persistance.entity.account.AccountStatus;
+import data_execution.data_execution.persistance.entity.account.RoleName;
 import lombok.*;
 
 import java.time.LocalDateTime;

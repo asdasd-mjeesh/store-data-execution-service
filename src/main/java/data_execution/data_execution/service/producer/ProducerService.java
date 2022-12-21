@@ -1,7 +1,7 @@
 package data_execution.data_execution.service.producer;
 
 import data_execution.data_execution.dto.filter.ProducerFilter;
-import data_execution.data_execution.entity.producer.Producer;
+import data_execution.data_execution.persistance.entity.producer.Producer;
 
 import java.util.List;
 import java.util.Optional;

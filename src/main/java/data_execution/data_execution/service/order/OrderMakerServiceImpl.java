@@ -1,10 +1,10 @@
 package data_execution.data_execution.service.order;
 
-import data_execution.data_execution.entity.account.Account;
-import data_execution.data_execution.entity.cart.Cart;
-import data_execution.data_execution.entity.order.Order;
-import data_execution.data_execution.entity.order.OrderItem;
-import data_execution.data_execution.entity.order.OrderStatus;
+import data_execution.data_execution.persistance.entity.account.Account;
+import data_execution.data_execution.persistance.entity.cart.Cart;
+import data_execution.data_execution.persistance.entity.order.Order;
+import data_execution.data_execution.persistance.entity.order.OrderItem;
+import data_execution.data_execution.persistance.entity.order.OrderStatus;
 import data_execution.data_execution.service.account.AccountService;
 import data_execution.data_execution.service.cart.CartService;
 import lombok.extern.slf4j.Slf4j;

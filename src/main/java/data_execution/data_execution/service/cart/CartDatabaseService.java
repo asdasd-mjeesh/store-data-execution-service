@@ -1,8 +1,8 @@
 package data_execution.data_execution.service.cart;
 
-import data_execution.data_execution.entity.cart.Cart;
+import data_execution.data_execution.persistance.entity.cart.Cart;
 import data_execution.data_execution.exception.EntityNotFoundException;
-import data_execution.data_execution.repository.cart.CartRepository;
+import data_execution.data_execution.persistance.repository.cart.CartRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

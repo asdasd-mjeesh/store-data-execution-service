@@ -1,7 +1,7 @@
 package data_execution.data_execution.service.item;
 
 import data_execution.data_execution.dto.filter.ItemFilter;
-import data_execution.data_execution.entity.item.Item;
+import data_execution.data_execution.persistance.entity.item.Item;
 
 import java.util.List;
 import java.util.Optional;

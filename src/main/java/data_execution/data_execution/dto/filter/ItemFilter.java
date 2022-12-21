@@ -1,6 +1,6 @@
 package data_execution.data_execution.dto.filter;
 
-import data_execution.data_execution.entity.item.ItemType;
+import data_execution.data_execution.persistance.entity.item.ItemType;
 import lombok.*;
 
 import java.math.BigDecimal;

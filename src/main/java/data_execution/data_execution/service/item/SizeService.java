@@ -1,6 +1,6 @@
 package data_execution.data_execution.service.item;
 
-import data_execution.data_execution.entity.item.Size;
+import data_execution.data_execution.persistance.entity.item.Size;
 
 import java.util.Collection;
 import java.util.List;
